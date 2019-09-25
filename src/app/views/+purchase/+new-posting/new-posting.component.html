@@ -1,0 +1,160 @@
+<div id="wrapper" class="wrapper wrapper-content animated fadeInRight">
+
+
+  <div class="gray-bg" [formGroup]="postingForm">
+    <div class="i10a">
+      <!-- satınalma ilan ana konteyner baslangic-->
+      <!-- çoklu dil seçimi bölümü baslangic-->
+
+      <div class="d10a">
+        <kb-new-posting-language #language
+                                 [form]="postingForm"></kb-new-posting-language>
+      </div>
+      <!-- çoklu dil seçimi bölümü son -->
+      <!-- satınalma ilan baslangic -->
+      <div class="i10f">
+        <div class="i20a">
+
+          <!-- Satınalma ilanı kutusu  mesaj bolumunu içermiyor-->
+          <div class="i20b">
+            <!--Başlık Bölümü-->
+            <div class="i21b">
+              <!--  <span title="Tıklayın ve ilan başlığı girişi yapın"
+                      contenteditable="true"
+                      [(contenteditableModel)]="postingInfoModel.postingDetailList[0].postingTitle">
+                  {{postingInfoModel.postingDetailList[0].postingTitle}}
+                </span>-->
+
+              <div #title
+                   contenteditable="true" [ceForm]="postingForm"
+                   kbEditable
+                   class="title"
+                   ceFormArrayName="postingDetailList"
+                   [ceFormGroupName]="selectedDetailIndex"
+                   ceFormControlName="postingTitle"
+                   title="{{'posting.enterTitle' | translate}}">
+                Başlık
+              </div>
+
+              <div>
+
+              </div>
+            </div>
+            <div class="i22b"><i class="fa fa-bars"></i></div>
+            <div class="i29b"><i class="fa fa-bookmark"></i></div>
+          </div>
+          <div class="i20c">
+            <div class="i21dc">posting-no</div>
+            <div class="i20d">
+              <div>
+                <div class="amount"
+                     kbEditable
+                     contenteditable="true"
+                     [ceForm]="postingForm"
+                     [number]="true"
+                     ceFormControlName="amount"
+                     title="Ürün Miktarı">10000
+                </div>
+                <!--<b title="Adet">Adet</b>-->
+                <kb-new-posting-amount formControlName="idUnit"></kb-new-posting-amount>
+              </div>
+              <div><i title="29/08/2017 17:28"><b>1</b> ay kaldı</i></div>
+            </div>
+            <div class="i21c" style="position:relative;"> <!-- Görsel için büyüyüp küçülen div -->
+              <div class="i28i">
+                <div><img src="http://localhost:8080/kobip/3uye/3i/msi2a.jpg"><i class="fa fa-plus"></i></div>
+              </div>
+              <div class="i20e">
+                <kb-new-posting-description [isEdit]="isEdit" [form]="postingForm"></kb-new-posting-description>
+                <kb-new-posting-brand [isEdit]="isEdit" [form]="postingForm"></kb-new-posting-brand>
+                <a style="display: none;">Daha fazla...</a>
+              </div>
+              <div class="i20f">
+                <div class="i20g">
+                  <i style="font-size:2.5em; margin: 0 10px  0 0;"
+                     title="Tercih Edilen Taşıma Şekilleri"
+                     class="fa fa-dropbox"></i>
+                  <kb-transport-type formControlName="postingInfoTransportationTypeList"></kb-transport-type>
+                </div>
+                <div class="i20h">
+                  <div class="i21h">Ürün siparişi verildikten sonra <b>30 gün</b> içerisinde
+                    <label
+                      title="Mal Bedeli, Sigorta ve Navlun Ödenmiş Olarak Risk transferi noktası olarak geminin küpeştesinin dikkate alınması">COF</label>,
+                    <label title="Gemiye Yükleyerek ( Küpeştesinden geçmiş ) Teslim">FOB</label>
+                    şeklinde teslim edilmesi beklenmektedir.
+                  </div>
+                  <div class="i22h">
+                    <span><b>"</b><i>Teslimat Notu - Ürünler kesinlike taşıma sırasında zarar görmeyecek şekilde paketlenmelidir.</i><b>"</b></span>
+                  </div>
+                </div>
+              </div>
+            </div><!-- Görsel için büyüyüp küçülen div SON -->
+            <div class="i20i i25i">
+
+              <div class="i21i">
+                <kb-new-posting-fileupload
+                  projectId="100"
+                  sectionId="107"
+                  maxFiles="4"
+                  maxSize="2"
+                  formControlName="postingInfoImageList"
+                  fileExt="JPG, GIF, PNG"
+                  (uploadStatus)="refreshImages($event)">
+                </kb-new-posting-fileupload>
+                <!--    <a><img src="3i/msi3.jpg"></a>
+                    <a><img src="3i/msi4.jpg"></a> -->
+              </div>
+              <div class="i22i">
+                <div><span>deneme dosyası-LT2885</span>
+                  <div class="i50j_2"><span>PDF</span></div>
+                </div>
+
+                <a><i class="fa fa-plus"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Ayrntılar ve Teslimat blogu baslangic -->
+      <div class="i10b">
+        <!-- <div class="i10c">
+           <li><a class="i11c i12c" onclick="alert('Genel Bilgiler');">Genel Bilgiler</a></li>
+           <li><a class="i11c" onclick="alert('Teslimat');">Teslimat</a></li>
+         </div>
+         <hr>-->
+        <!-- Ayrıntılar bölümü b -->
+        <!-- Ayrıntılar bölümü s -->
+
+      </div>
+      <div class="tabs-container" *ngIf="isEdit">
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#g-b">Genel Bilgiler</a></li>
+          <li class=""><a data-toggle="tab" href="#t-b">Teslimat Bilgileri</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="g-b" class="tab-pane active">
+            <div class="panel-body">
+              <kb-new-posting-general [postingForm]="postingForm"></kb-new-posting-general>
+            </div>
+          </div>
+          <div id="t-b" class="tab-pane">
+            <div class="panel-body">
+              <kb-new-posting-delivery [form]="postingForm"></kb-new-posting-delivery>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <!-- Ayrıntılar ve Teslimat blogu son -->
+
+      <!-- satınalma ilan son -->
+    </div>
+    <div style="clear:both;"> &nbsp;</div>
+  </div>
+</div>
+
+
+<pre>{{postingForm.getRawValue() |json}}</pre>

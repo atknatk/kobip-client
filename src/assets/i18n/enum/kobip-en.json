@@ -1,0 +1,8 @@
+{
+	"enum": {
+		"unit": {
+			"kg": "Kilogramm",
+			"mt": "Meter"
+		}
+	}
+}

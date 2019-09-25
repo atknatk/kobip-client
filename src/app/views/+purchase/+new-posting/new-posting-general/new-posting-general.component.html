@@ -1,0 +1,189 @@
+<!--
+<div class="i11e1">&lt;!&ndash; ilk blok &ndash;&gt;
+  <div> &lt;!&ndash; birincil ek bilgiler &ndash;&gt;
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+
+      </div>
+    </div>
+    <div>
+      <div>
+        <div class="onoffswitch">
+          <input type="checkbox"
+                 class="onoffswitch-checkbox"
+                 title="Partleriniz ilanınızın kendi partler listesinde bulunan bir firmadan geldiğini göremeyecek"
+                 id="isOnlyPartnerPostingVisible">
+          <label style="margin: 0;" class="onoffswitch-label" for="isOnlyPartnerPostingVisible">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+          </label>
+        </div>
+        <span style="float: right">Partner Bilgileri Kapalı</span>
+      </div>
+      <div>
+        <input class="i54s" type="checkbox"
+               title="Firmalar iletişime geçmeden önce mutlaka teklif vermek zorunda olacak"><i>Teklif
+        Zorunlu</i></div>
+    </div>
+    <div>
+      <span>İlan Süresi</span><input class="i33g" name="e" title="İlanın yayından kalkacağı tarih"
+                                     value="29-12-2017" data-i_son_tarih="2017-12-29" readonly="readonly"
+                                     type="text">
+    </div>
+  </div>
+  <div> &lt;!&ndash; ikincil ek bilgiler &ndash;&gt;
+    <div>
+      <span>Teklif İlgilisi</span>
+      <select id="i56s">
+        <option value="1">Umur İnan</option>
+        <option value="2" selected>Atakan Atik</option>
+        <option value="3">Ali Aktaş</option>
+      </select>
+    </div>
+    <div>
+      <span>Firma İçi Ürün Kodu</span>
+      <input class="i52e" placeholder="Firma İçi Ürün Kodu" type="text">
+    </div>
+  </div>
+</div>
+<hr>
+<div class="i11e2"> &lt;!&ndash; ikinci blok &ndash;&gt;
+  <div><span>Yayın Ülkeleri</span> <input class="i34s" type="checkbox"> <label>Sadece Yerel İlan</label>
+  </div>
+  <div class="i30h">
+    <div class="i31h">
+      <select class="i32h">
+        <option value="0">Ülke Seçiniz</option>
+        <option value="225">Türkiye</option>
+        <option value="64">Estonya</option>
+        <option value="70">Finlandiya</option>
+        <option value="75">Fransa</option>
+        <option value="57">Almanya</option>
+        <option value="89">Yunanistan</option>
+        <option value="100">Macaristan</option>
+        <option value="102">İrlanda</option>
+        <option value="110">İtalya</option>
+        <option value="135">Letonya</option>
+        <option value="133">Litvanya</option>
+        <option value="134">Lüksemburg</option>
+        <option value="200">Slovenya</option>
+      </select>
+      <select class="i33h">
+        <option selected="selected" value="0">Bölge Seç</option>
+        <option value="1" data-ul="[12,20,22]">Avrupa Birliği</option>
+        <option value="2" data-ul="[]">Asya</option>
+        <option value="3" data-ul="[]">Afrika</option>
+        <option value="4" data-ul="[]">Amerika</option>
+      </select>
+    </div>
+    <div class="i35h">
+      <div></div>
+    </div>
+  </div>
+</div>
+-->
+<div class="row" [formGroup]="postingForm">
+  <div class="col-xs-12 col-sm-6">
+    <div class="row form-group" style="height: 34px;">
+      <label class="col-xs-12 col-sm-6 control-label truncate" title="{{'posting.showPartnerInfoTitle' | translate}}">
+        {{'posting.showPartnerInfo' | translate}}
+      </label>
+      <div class="col-xs-12 col-sm-6">
+        <div class="onoffswitch">
+          <input type="checkbox"
+                 formControlName="isShowHasPartnership"
+                 class="onoffswitch-checkbox"
+                 id="isOnlyPartnerPostingVisible">
+          <label style="margin: 0;"
+                 title="{{'posting.showPartnerInfoTitle' | translate}}"
+                 class="onoffswitch-label"
+                 for="isOnlyPartnerPostingVisible">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="row form-group" style="height: 34px;">
+      <label class="col-xs-12 col-sm-6 control-label truncate"
+             title="{{'posting.isOfferMandatoryTitle' | translate}}">
+        {{'posting.isOfferMandatoryLabel' | translate}}
+      </label>
+      <div class="col-xs-12 col-sm-6">
+        <div class="onoffswitch">
+          <input type="checkbox"
+                 formControlName="isOfferMandatory"
+                 class="onoffswitch-checkbox"
+                 id="isOfferMandatory">
+          <label style="margin: 0;"
+                 title="{{'posting.isOfferMandatoryTitle' | translate}}"
+                 class="onoffswitch-label"
+                 for="isOfferMandatory">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="row form-group" style="height: 34px;">
+      <label class="col-xs-12 col-sm-6 control-label truncate"
+             title="{{'posting.onlyLocalCountry' | translate}}">
+        {{'posting.onlyLocalCountry' | translate}}
+      </label>
+      <div class="col-xs-12 col-sm-6">
+        <div class="onoffswitch">
+          <input type="checkbox"
+                 [formControl]="term"
+                 class="onoffswitch-checkbox"
+                 id="isOnlyLocalCountry">
+          <label style="margin: 0;"
+                 class="onoffswitch-label"
+                 for="isOnlyLocalCountry">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-6">
+    <div class="row form-group">
+      <label class=" col-xs-12 col-sm-6 control-label truncate">{{'posting.offerBy' | translate}}</label>
+      <div class="col-xs-12 col-sm-6">
+        <select class="form-control">
+          <option value="null" translate>component.select</option>
+          <option *ngFor="let option of employeeObservable | async"
+                  [value]="option.id">
+            {{option.name}}
+            {{option.middleName}}
+            {{option.surname}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="row form-group">
+      <label class="col-xs-12 col-sm-6 control-label truncate">
+        {{'posting.productCodeInCompany' | translate}}
+      </label>
+      <div class="col-xs-12 col-sm-6">
+        <input class="form-control">
+      </div>
+    </div>
+    <div class="row form-group">
+      <label class="col-xs-12 col-sm-6 control-label truncate">
+        {{'posting.offerExpireAt' | translate}}
+      </label>
+      <div class="col-xs-12 col-sm-6">
+        <input id="posting-expire-at" type="text" class="form-control">
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12">
+    <!-- <div [ngClass]="!showCountryList? 'col-overlay': 'hide'" class="text-center">
+       <span style="color: white; font-size: 30px;">{{'posting.onlyLocalCountry' | translate}}</span>
+     </div>-->
+    <kb-duallist *ngIf="showCountryList"
+                 #country
+                 (selectedListChangedEvent)="salesSelectedListEvent($event)"></kb-duallist>
+  </div>
+</div>

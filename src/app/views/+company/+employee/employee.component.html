@@ -1,0 +1,158 @@
+<kb-loading [show]="loading">
+  <div class="wrapper wrapper-content animated fadeInRight"><!-- bu bölüme yeni parca eklendi -->
+    <br>
+    <!--satınalma satırları -->
+    <div class="row">
+      <div class="col-lg-12 ">
+        <div class="ibox kb ibox-kutu">
+          <div class="ibox-title">
+            <h5 translate>employee.invite</h5>
+            <iboxtools></iboxtools>
+          </div>
+          <div class="ibox-content">
+            <span class="label label-primary" translate>employee.invited</span>
+            <ol class="kb-yeni_davet_edilenler">
+              <div *ngFor="let invitedEmployee of invitedEmployeesObservable| async"
+                   class="row">
+                <li>
+                  <div class="col-md-6"><span>{{invitedEmployee.mail}}</span></div>
+                  <div class="col-md-6">
+                    <span [translate]="'employee.invitation'"
+                          [translateParams]="{employee: invitedEmployee.invitorName+ ' ' + invitedEmployee.invitorSurname,
+                          date : invitedEmployee.invitationDate}">
+                    </span>
+
+                    <span>{{ 'employee.invitation' | translate }}</span>
+
+                  </div>
+                </li>
+              </div>
+            </ol>
+            <hr>
+            <span class="label label-primary" style="margin-bottom: 5px;" translate>employee.newEmployeIntive</span>
+            <br>
+            <kb-auth-roles-edit (valueChange)="roleInvitedChanged($event)">
+              <br>
+              <div class="col-md-6"><br>
+                <select class="form-control"
+                        #t
+                        (change)="onChangeInvitedDepartmant(t.value)">
+                  <option *ngFor="let option of companyUserCategoryObservable | async"
+                          [value]="option.id">
+                    {{option.display}}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-6"><br>
+                <div class="input-group">
+                  <input #mail
+                         class="form-control"
+                         (change)="onChangeInviteEmployee(mail.value)"
+                         type="text"
+                         placeholder="{{'employee.email' | translate}}">
+                  <span class="input-group-btn">
+                    <button type="button" (click)="inviteEmployee()" class="btn btn-primary">
+                    {{'employee.inviteEmployee' | translate}}
+
+                  </button>
+                  </span>
+                </div>
+              </div>
+            </kb-auth-roles-edit>
+
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- satınalma satırları son -->
+    <br>
+    <!--satış satırları -->
+    <div class="row">
+      <div class="col-lg-12 ">
+        <div class="ibox kb ibox-kutu">
+          <div class="ibox-title">
+            <h5 translate>employee.companyEmployee</h5>
+            <iboxtools></iboxtools>
+          </div>
+          <div class="ibox-content">
+
+            <div class="kb-genel_kutu kb-calisan_kutu" *ngFor="let employee of employees;let idx=index;">
+              <div class="kb-calisan">
+                <div class="kb-calisan_foto">
+                  <img alt="image"
+                       class="img-circle kb-calisan_mini"
+                       [src]="employee.thumbnailPath ? employee.thumbnailPath : kobipConfig.thumbnailPathProfile">
+                </div>
+                <div class="kb-calisan_ismi"><span>{{employee.name}} {{employee.middleName}} {{employee.surname}}</span>
+                  <br>
+                  {{employee.idCompanyUserCategory | translate}}
+                </div>
+                <div *ngIf="!employee.isAdmin" class="kb-calisan_ayar"><i class="fa fa-circle kb-calisan_aktif"></i><i
+                  class="fa fa-check-square"></i>
+                  <i (click)="toggleSettings(employee.id)" class="fa fa-gear"></i></div>
+              </div>
+              <hr>
+              <!--calisan Bilgileri -->
+              <div class="row kb-calisan_bilgi">
+                <div class="col-md-4 kb-calisan_bilgi-kolon1">
+                  <div class="font-bold">{{employee.companyBasedPhone}}</div>
+                  <div class="font-bold">{{employee.localMobilePhone}}</div>
+                  <div class="font-bold">{{employee.companyBasedMail}}</div>
+
+                  <span class="label label-success kb-dil-label1"
+                        *ngFor="let lang of employee.employeeLanguageList">{{lang | translate}}</span>
+                </div>
+                <div class="col-md-8 kb-calisan_bilgi-kolon2">
+                  <div><i class="fa fa-globe"></i>{{employee.intPurchasingMail}}<span class="badge">Purchasing</span>
+                  </div>
+                  <div><i class="fa fa-globe"></i>{{employee.intSalesMail}}<span class="badge">Sales</span></div>
+                  <div><i class="fa fa-home"></i>{{employee.localPurchasingMail}}<span class="badge">Purchasing</span>
+                  </div>
+                  <div><i class="fa fa-home"></i> {{employee.localSalesMail}}<span class="badge">Sales</span></div>
+                </div>
+              </div>
+
+              <div id="employee-settings-{{employee.id}}"
+                   style="display: none">
+                <hr>
+                <div class="kb-calisan_guncelle_menu">
+                  <div><span class="label label-primary">{{'employee.update' | translate}}</span></div>
+                  <div class="kb-calisan_guncelle_menu2">
+                    <i class="fa fa-toggle-on"></i>
+                    <i class="fa fa-trash"></i>
+                  </div>
+                </div>
+                <kb-auth-roles-edit (valueChange)="roleChanged($event,idx)"
+                                    [grantedRoles]="employee.roleList">
+                  <div class="col-md-6"><br>
+                    <select class="form-control"
+                            #t
+                            (change)="onChangeDepartmant(t.value,idx)">
+                      <option *ngFor="let option of companyUserCategoryObservable | async"
+                              [attr.selected]="option.id === employee.idCompanyUserCategory ? '' : null"
+                              [value]="option.id">
+                        {{option.display}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-md-6"><br>
+                    <div class="kb-calisan_guncelle_buton">
+                      <button type="button" (click)="updateEmployee(idx)" class="btn btn-primary">
+                        {{'app.general.update' | translate}}
+                      </button>
+                    </div>
+                  </div>
+                </kb-auth-roles-edit>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</kb-loading>
+

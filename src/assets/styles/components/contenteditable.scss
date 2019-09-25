@@ -1,0 +1,11 @@
+[contenteditable=true]:empty:before {
+  content: attr(title);
+  opacity: 0.6;
+}
+
+div[contenteditable=true] {
+  //border-bottom: 1px #AAA;
+  min-width: 50px;
+  min-height: 1em;
+  outline: none;
+}

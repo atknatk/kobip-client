@@ -1,0 +1,59 @@
+/*
+$text-color: #676a6c; // Body text
+.ng-valid[required], .ng-touched[required], .ng-valid.required {
+  border: 1px solid #42A948;
+  border-left-width: 5px;
+}
+
+.ng-invalid:not(form) {
+  &.ng-touched {
+    border: 1px solid #a94442;
+    border-left-width: 5px;
+  }
+}
+*/
+
+$error-color: #ff5500; // #F44336;
+$valid-color: #4CAF50;
+
+// border-bottom on select element is not apply correctly without this selector
+.select-wrapper input.select-dropdown.invalid,
+textarea.ng-invalid.ng-touched:focus {
+  border-bottom: 1px solid $error-color;
+  box-shadow: 0 1px 0 0 $error-color;
+}
+
+.select-wrapper input.select-dropdown.valid {
+  border-bottom: 1px solid $valid-color;
+  box-shadow: 0 1px 0 0 $valid-color;
+}
+
+input:not([type="checkbox"]):focus + label.active,
+textarea:focus + label.active {
+  span.placeholder-required {
+    color: $error-color;
+  }
+}
+
+$error-message-color: #ff5500; // #e30613;
+$error-font-size: 12px;
+$error-height: 19px;
+$error-opacity: 1;
+
+div.invalid {
+  color: $error-message-color;
+  font-size: $error-font-size;
+  opacity: $error-opacity;
+  overflow-wrap: break-word;
+  float: left;
+}
+
+input:not([type="checkbox"]) + label + :host,
+kb-select-container :host,
+textarea + label + :host {
+
+  div.invalid {
+    margin-top: (-$error-height);
+    min-height: $error-height
+  }
+}

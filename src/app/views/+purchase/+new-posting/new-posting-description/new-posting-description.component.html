@@ -1,0 +1,9 @@
+<div class="i21e">
+  <div id="posting-desc" class="i21e_m">
+    <span id="postingDescription"
+          [innerHtml]="getPostingDescription()"
+          (click)="onFocusDescription()"></span>
+    <span *ngIf="getPostingDescription() === '' && !showingEdit" (click)="onFocusDescription()"
+          translate>posting.enterDescription</span>
+  </div>
+</div>

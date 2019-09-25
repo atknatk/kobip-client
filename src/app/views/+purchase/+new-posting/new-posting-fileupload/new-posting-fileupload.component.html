@@ -1,0 +1,44 @@
+<div class="fu-images" *ngFor="let value of values">
+  <button type="button" data-toggle="modal" data-target="#myModal" style="border: none; outline: none;
+    background: none;
+    padding: 0;">
+    <!--<img src="{{value.data}}">-->
+    <img src="{{value.path}}">
+  </button>
+
+</div>
+<div draggable="true" ngClass="{{dragAreaClass}}">
+  <a href="javascript:void(0)" (click)="file.click()"><i class="fa fa-plus"></i></a>
+  <input type="file"
+         #file
+         [multiple]="(maxFiles > 1)"
+         (change)="onFileChange($event)"
+         style="display:none"/>
+</div>
+
+
+<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content animated bounceInRight">
+      <ul class="slides">
+        <div *ngFor="let value of values; let idx = index">
+          <input type="radio" name="radio-btn" id="img-{{idx}}" checked/>
+          <li class="slide-container">
+            <div class="slide">
+              <img src="{{value.path}}"/>
+            </div>
+            <div class="nav" *ngIf="values.length > 1">
+              <label [attr.for]="'img-'+ imagePrev(values,idx)"
+                     class="prev">&#x2039;</label>
+              <label [attr.for]="'img-'+ imageNext(values,idx)"
+                     class="next">&#x203a;</label>
+            </div>
+          </li>
+        </div>
+        <li *ngIf="values.length > 1" class="nav-dots">
+          <label *ngFor="let value of values; let idx = index;" [attr.for]="'img-'+ (idx)" class="nav-dot"></label>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

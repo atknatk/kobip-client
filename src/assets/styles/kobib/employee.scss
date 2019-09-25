@@ -1,0 +1,110 @@
+.kb-calisan_aktif {
+  color: #1ab394;
+}
+
+.kb-calisan_pasif {
+  color: #D70000;
+}
+
+.kb-yeni_davet_edilenler {
+  margin: 8px 0 0 0;
+  > li {
+    div {
+      display: inline-block;
+      line-height: 24px;
+      width: 100%;
+    }
+    > div div {
+      width: 50%;
+    }
+  }
+}
+
+.kb-calisan_davet {
+  margin: 15px 0 0 0;
+  > div > label {
+    font-weight: normal;
+    > input {
+      margin-right: 8px;
+    }
+  }
+}
+
+.kb-calisan_kutu hr {
+  margin: 5px 0 !important;
+}
+
+.kb-calisan {
+  position: relative;
+  > div {
+    display: inline-block;
+  }
+}
+
+.kb-calisan_foto {
+  text-align: center;
+  vertical-align: top;
+  padding: 2px 10px 0 0;
+  > div {
+    width: 40px;
+  }
+}
+
+.kb-calisan_mini {
+  height: 32px;
+}
+
+.kb-calisan_ismi span:first-child {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.kb-calisan_ayar {
+  position: absolute;
+  right: 0;
+  top: 2px;
+  i {
+    font-size: 18px;
+    padding: 5px;
+    margin: 5px;
+  }
+}
+
+.kb-calisan_bilgi-kolon1, .kb-calisan_bilgi-kolon2 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.kb-calisan_bilgi-kolon1 > div {
+  line-height: 24px;
+}
+
+.kb-calisan_bilgi-kolon2 > div {
+  line-height: 24px;
+  margin: 0 0 5px 0;
+}
+
+.kb-calisan_yetki_goruntuleme {
+  line-height: 38px;
+}
+
+.kb-calisan_guncelle_menu > div {
+  display: inline-block;
+  line-height: 38px;
+}
+
+.kb-calisan_guncelle_menu2 {
+  float: right;
+  > i {
+    font-size: 18px;
+    padding: 5px;
+    margin: 5px;
+  }
+}
+
+.kb-calisan_guncelle_buton {
+  text-align: center;
+  > button {
+    width: 180px;
+  }
+}

@@ -1,0 +1,73 @@
+<!-- Teslimat bölümü b -->
+<div id="t2" class="i11e">
+  <div class="i11e5">
+    <div>
+      <span>Teslimat Bölümü Görünsün</span>
+      <input class="i41s" type="checkbox">
+    </div>
+  </div>
+
+  <hr>
+  <div class="i41a">
+    <div class="i11e6">
+      <span>Teslimat Süresi</span>
+      <div>
+        <div>
+          <select class="_g3 i40c" name="i">
+            <option value="1">Belirli Tarihe Kadar Kargoya Verilmeli</option>
+            <option value="2">Belirli Tarihe Kadar Teslimat Yapılmalı</option>
+            <option value="3" selected="selected">Siparişten Sonra Belirli Süre İçerisinde Kargoya Verilmeli</option>
+            <option value="4">Siparişten Sonra Belirli Süre İçerisinde Teslimat Yapılmalı</option>
+          </select>
+        </div>
+        <div>
+
+          <!-- bu bölüm seçeneğe göre deişecek -->
+          <div class="i40d i42d ">
+            <input class="_g4" name="j" value="30" min="0" step="1" type="number">
+            <select class="_g3 i41c" name="k">
+              <option value="1" selected="selected">Gün</option>
+              <option value="2">Hafta</option>
+              <option value="3">Ay</option>
+            </select>
+          </div>
+          <!-- bu bölüm seçeneğe göre deişecek -->
+        </div>
+
+      </div>
+    </div>
+    <hr>
+    <div class="i11e7">
+      <span>Teslimat Şekli</span>
+      <ul class="i40e">
+        <li><input value="1" type="checkbox">İş Yerinde Teslim (EXW)</li>
+        <li><input value="2" type="checkbox">Limanda Teslim (FOB)</li>
+        <li><input value="3" checked="" type="checkbox">Taşıyıcıya Teslim (FCA)</li>
+        <li><input value="4" type="checkbox">Mal bedeli ve taşıma (CFR)</li>
+        <li><input value="5" type="checkbox">Mal bedeli, Sigorta ve taşıma (CIF)</li>
+        <li><input value="6" type="checkbox">Taşıma ce Sigorta Ödenmiş Olarak (CIP)</li>
+      </ul>
+      <hr>
+
+      <span>Taşıma Şekli</span>
+      <div class="i40g">
+        <i id="i41" class="_i truck_d i41g" data-v="1"></i>
+        <i id="i42" class="_i ship" data-v="2"></i>
+        <i id="i43" class="_i plane_d i41g" data-v="3"></i>
+      </div>
+    </div>
+
+    <hr>
+    <div class="i11e7">
+      <span>Teslimat Notu</span>
+      <!--Not referans div -->
+      <div class="i40s">
+        <input class="i42s" type="checkbox"><span>Sadece Benim Notum Görünsün</span>
+      </div>
+      <textarea id="ta" class="i40f" name="o"></textarea>
+    </div>
+    <!--Not referans div -->
+  </div>
+  <!-- Modal kapama referans div -->
+
+</div>

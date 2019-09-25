@@ -1,0 +1,175 @@
+
+.kb-partner_kutu hr {
+  margin: 5px 0 !important;
+}
+
+.kb-partner_davet > div:first-child {
+  > div {
+    display: inline-block;
+    padding: 0 15px 0 0;
+    line-height: 34px;
+    width: 33%;
+    font-size: 14px;
+    > div {
+      cursor: pointer;
+    }
+  }
+  i {
+    font-size: 16px;
+    color: $red;
+
+  }
+  .active {
+    color: $navy !important;
+  }
+  span {
+    padding: 0 5px 0 0;
+  }
+}
+
+.kb-partner {
+  position: relative;
+  .kb-partner-star-firma_ismi {
+    display: inline-flex;
+    cursor: pointer;
+  }
+  > div {
+    display: inline-block;
+  }
+}
+
+.kb-partner-star {
+  text-align: center;
+  padding: 0 10px 0 0;
+  > div {
+    width: 40px;
+  }
+  i {
+    color: #ffd627;
+    font-size: 20px;
+  }
+}
+
+.kb-partner-puan {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.kb-partner-ayar {
+  position: absolute;
+  right: 0;
+  top: 2px;
+  i {
+    font-size: 18px;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+  }
+  i:hover {
+    color: $navy;
+  }
+}
+
+.kb-partner-firma_ismi {
+  :hover {
+    /*color: $navy;*/
+  }
+  span:first-child {
+    font-size: 14px;
+    font-weight: bold;
+  }
+}
+
+.kb-partner_bilgi-kolon1, .kb-partner_bilgi-kolon2 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.kb-partner_bilgi-kolon1 > div, .kb-partner_bilgi-kolon2 > div {
+  line-height: 22px;
+}
+
+.kb-partner_bilgi-kolon1 > div:nth-child(1), .kb-partner_bilgi-kolon2 > div:nth-child(1) {
+  margin-bottom: 10px;
+}
+
+.kb-partner_ayar_menu {
+  > div {
+    &:first-child {
+      > div {
+        display: inline-block;
+        padding: 0 15px 0 0;
+        line-height: 34px;
+        width: 33%;
+        font-size: 14px;
+        > div {
+          cursor: pointer;
+        }
+      }
+      i {
+        font-size: 16px;
+        color: $red;
+      }
+      .active {
+        color: $navy !important;
+      }
+      span {
+        padding: 0 5px 0 0;
+      }
+    }
+    &:nth-child(2) {
+      padding-top: 5px;
+    }
+    &:nth-child(3) {
+      text-align: right;
+    }
+  }
+  i {
+    font-size: 18px;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+  }
+  i:hover {
+    color: $navy;
+  }
+}
+
+.kb-partner_kategori {
+  span {
+    line-height: 22px;
+    &:last-child {
+      color: #4384c1;
+    }
+  }
+  i {
+    font-size: 16px;
+    vertical-align: middle;
+    margin: 0px 5px 2px 5px;
+  }
+}
+
+.kb-partner_ara {
+  i {
+    font-size: 18px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  .kb-arama i {
+    &:first-child {
+      color: #ffd627;
+    }
+    &:nth-child(2) {
+      color: #4384c1;
+    }
+    &:nth-child(3) {
+      color: #5fba7d;
+    }
+    &:nth-child(4)  {
+      color: red;
+    }
+  }
+  i:last-child {
+    color: #4384c1;
+  }
+}

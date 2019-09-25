@@ -1,0 +1,208 @@
+kb-select-dropdown {
+  box-sizing: border-box;
+  font-family: Sans-Serif;
+
+* {
+    box-sizing: border-box;
+    font-family: Sans-Serif;
+  }
+
+> div {
+    background-color: #fff;
+    border-bottom: 1px solid $navy;
+    border-left: 1px solid  $navy;
+    border-right: 1px solid  $navy;
+    border-top: none;
+    box-sizing: border-box;
+    position: absolute;
+    z-index: 1;
+
+  .filter {
+      padding: 3px;
+      width: 100%;
+
+      input {
+        border: 1px solid #eee;
+        box-sizing: border-box;
+        padding: 4px;
+        width: 100%;
+      }
+    }
+
+  .options {
+      max-height: 200px;
+      overflow-y: auto;
+
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+          padding: 4px 8px;
+          cursor: pointer;
+          user-select: none;
+        }
+      }
+    }
+  }
+
+.selected {
+    background-color: #e0e0e0;
+
+  &.highlighted {
+      background-color: #2196F3;
+      color: #fff;
+    }
+  }
+
+.highlighted {
+    background-color: #2196F3;
+    color: #fff;
+  }
+
+.disabled {
+    background-color: #fff;
+    color: #9e9e9e;
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+
+kb-select {
+  display: inline-block;
+  margin: 0;
+  position: relative;
+  vertical-align: middle;
+  width: 100%;
+
+  * {
+    box-sizing: border-box;
+    font-family: Sans-Serif;
+  }
+  // Container.
+  > div {
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    cursor: pointer;
+    user-select: none;
+    width: 100%;
+    outline: none;
+
+    &.open {
+      border-bottom: 1px solid #ddd !important;
+    }
+
+    &.focus {
+      border: 1px solid $navy;
+
+    }
+
+    &.below {
+
+    }
+
+    &.disabled {
+      background-color: #eee;
+      color: #aaa;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    > div.single {
+      display: flex;
+      height: 30px;
+      width: 100%;
+
+      > div.value,
+      > div.placeholder {
+        flex: 1;
+        line-height: 30px;
+        overflow: hidden;
+        padding: 0 10px;
+        white-space: nowrap;
+      }
+
+      > div.placeholder {
+        color: #757575;
+      }
+
+      > div.clear,
+      > div.toggle {
+        color: #aaa;
+        line-height: 30px;
+        text-align: center;
+        width: 30px;
+
+        &:hover {
+          background-color: #ececec;
+        }
+      }
+
+      > div.clear {
+        font-size: 18px;
+      }
+
+      > div.toggle {
+        font-size: 14px;
+      }
+    }
+
+    > div.multiple {
+      display: flex;
+      flex-flow: row wrap;
+      height: 100%;
+      min-height: 30px;
+      padding: 0 10px;
+      width: 100%;
+
+      > div.option {
+        background-color: #fff;
+        border: 1px solid $navy;
+        border-radius: 4px;
+        color: #333;
+        cursor: default;
+        display: flex;
+        flex-shrink: 0;
+        font-size: 14px;
+        line-height: 22px;
+        margin: 3px 5px 3px 0;
+        padding: 0 4px;
+
+        span.deselect-option {
+          color: #aaa;
+          cursor: pointer;
+          font-size: 14px;
+          height: 20px;
+          line-height: 20px;
+
+          &:hover {
+            color: #555;
+          }
+        }
+      }
+
+      input {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        height: 30px;
+        line-height: 30px;
+        padding: 0;
+
+        &:focus {
+          outline: none
+        }
+      }
+    }
+  }
+
+  // Label.
+  label {
+    color: rgba(0, 0, 0, 0.38);
+    display: block;
+    font-size: 13px;
+    padding: 4px 0;
+  }
+}

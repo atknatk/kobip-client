@@ -1,0 +1,560 @@
+<div class="kb-filtre">
+  <!--satış ilan liste filtreleme baslangic -->
+  <form [formGroup]="filterForm">
+    <div class="row satis-liste">
+      <!-- partner ismi görünmeycek ancak partnerinden olduğunu bilecek -->
+      <div class="col-md-6">
+        <div class="sif-input">
+          <input class="filtre-genel-input"
+                 formControlName="pattern"
+                 (keyup.enter)="loadPosting()"
+                 placeholder="{{'app.hotads.patternInPosting' | translate}}"
+                 type="text">
+          <div>
+            <i id="sif-ackapa" class="fa fa-caret-down"></i>
+          </div>
+        </div>
+        <div id="sif-menu-panel" style="display:none" class="sif-sag-menu">
+          <!--   ilan menu-->
+          <div>
+            <div>Kategori Seç</div>
+            <div class="row">
+              <div class="sif-kategori" style="float: left;position: relative">
+                <kb-select2 placeholder="Start writing..."
+                            css="filtre-genel-input form-control input-sm"
+                            [dataSourceProvider]="listItemsMax"
+                            [kbSelect2ItemAdapter]="entityToIqSelect2Item"
+                            [resultsCount]="1212"
+                            formControlName="categoryList"
+                            [multiple]="true"
+                            [minimumInputLength]='0'
+                            referenceMode='id'></kb-select2>
+              </div>
+              <!--<select class="filtre-genel-input sif-kategori" name="category" title="İlan kategori filtresi">-->
+              <!--<option>Bilgisayar>Donanim</option>-->
+              <!--<option>Bilgisayar>Donanim</option>-->
+              <!--<option>Otomotiv>Yedek Parça</option>-->
+              <!--<option>Aydınlatma>Endüstriyel</option>-->
+              <!--<option>Mobilya>Salon</option>-->
+              <!--</select>-->
+              <div class="sif-pin">
+                <kb-check-icon title="{{'app.general.pinOption' | translate}}"
+                               icon="fa fa-flag-o"
+                               reverseIcon="fa fa-flag"
+                               formControlName="pinCategoryList"></kb-check-icon>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>Ülke Seç</div>
+            <div class="row">
+              <div class="sif-ulke" style="float: left;position: relative">
+                <kb-select2 placeholder="Start writing..."
+                            css="filtre-genel-input form-control input-sm"
+                            [dataSourceProvider]="listItemsMaxCountry"
+                            [kbSelect2ItemAdapter]="entityToIqSelect2ItemCountry"
+                            formControlName="countryList"
+                            [selectedProvider]="getItemsCountry"
+                            [multiple]="true"
+                            [minimumInputLength]='0'
+                            referenceMode='id'></kb-select2>
+              </div>
+              <div class="sif-pin">
+                <kb-check-icon title="{{'app.general.pinOption' | translate}}"
+                               icon="fa fa-flag-o"
+                               reverseIcon="fa fa-flag"
+                               formControlName="pinCountryList"></kb-check-icon>
+              </div>
+            </div>
+
+
+          </div>
+          <div class="sif-gorunmez-ilan"><label>
+            <input type="checkbox"
+                   name="checkbox"
+                   formControlName="showBlockedPosting"> Sadece Görünmeyen İlanları Listele</label></div>
+
+          <div>
+            <div (click)="loadPosting()"
+                 style="float:right; background-color:#eee; width:120px; padding:3px; border-radius: 3px; cursor: pointer">
+              <i class="fa fa-search"></i>
+              <span class="bold">Filtrele</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-6">
+
+        <div>
+          <div class="satis-filtre-ikon-l">
+            <kb-check-icon tooltip="{{'app.hotads.onlyPartnerPosting' | translate}}"
+                           icon="fa fa-suitcase"
+                           class="partner-check"
+                           formControlName="onlyShowPartnerPosting"></kb-check-icon>
+            <kb-check-icon tooltip="{{'app.hotads.sortByAmount' | translate}}"
+                           icon="fa fa-sort-numeric-asc"
+                           reverseIcon="fa fa-sort-numeric-desc"
+                           formControlName="isAmountOrder"></kb-check-icon>
+            <kb-check-icon tooltip="{{'app.hotads.sortByExpireAt' | translate}}"
+                           icon="fa fa-calendar"
+                           formControlName="isDeadlineOrder"></kb-check-icon>
+          </div>
+        </div>
+
+        <div class="satis-filtre-ikon-r">
+          <i class="fa fa-eraser"
+             (click)="removeFilter()"
+             tooltip="{{'app.general.removeFilter' | translate}}"></i>
+        </div>
+
+      </div>
+    </div>
+  </form>
+  <!--satış ilan liste filtreleme son-->
+</div>
+<kb-loading [showContentOnLoading]="showContentOnLoading" [show]="loading">
+  <div class="ilan_tahtasi"><!-- ilanlar bu bölüm içerisinde listelenir. margin:7px 5px -->
+    <!-- satış ilan satırları baslangic -->
+    <div class="ilan"
+         *ngFor="let posting of observablePosting | async  | paginate: { id:'paginationPosting',itemsPerPage: limit, currentPage: currentPage, totalItems: filterCount }">
+      <div class="x">
+        <div class="xt"><span title="{{'app.hotads.postingNo' | translate}}">{{posting.postingCode}}</span>
+          <div class="tk-daire"></div>
+          <div class="favori">
+            <div style="width: 20px;height: 30px"></div>
+            <i class="fa fa-bookmark" title="{{'app.general.addFavorite' | translate}}"></i>
+          </div>
+        </div>
+        <a class="xa" href="#">
+          <p class="baslik" title="{{'app.hotads.postingTitle' | translate}}">{{posting.title}}</p>
+        </a></div>
+      <div class="y">
+
+        <div class="v">
+          <div class="v1">
+          </div>
+        </div>
+
+        <div class="z">
+          <div class="z_sol">
+            <div class="miktar">{{posting.amount}}</div>
+            <div class="birim">{{posting.unit | translate}}</div>
+          </div>
+          <div class="z_sag">
+            <div class="ulke" title="{{'zzc.'+posting.country | translate}}">
+              <i class="fa fa-map-marker"></i>
+              <span>{{posting.country}}</span>
+            </div>
+            <div class="rate" title="{{'app.general.companyScore' | translate}}">
+              <i class="fa fa-star"></i>
+              <span>{{posting.companyScore}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="q">
+          <div class="ilan-ikonlar flex-orta">
+            <i class="fa fa-eye" title="{{'app.hotads.removePostingFromList' | translate}}"></i>
+            <i class="fa fa-calendar"
+               title="{{'app.hotads.lastOfferDate' | translate }} : {{posting.expiredAt | amUtc | amDateFormat: 'DD/MM/YYYY hh:mm'}}"></i>
+            <i class="fa fa-language" title="{{getLanguages(posting) | async}}"></i>
+            <i class="fa fa-picture-o" title="{{'app.hotads.postingImage' | translate}}"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div style="display: none">
+      <div class="ilan">
+        <div class="x">
+          <div class="xt"><span title="İlan Numarası">E4345TER4</span>
+            <div class="tk-daire"></div>
+            <div class="favori">
+              <i class="fa fa-bookmark" title="Favorilere Ekle"></i>
+            </div>
+          </div>
+          <a class="xa" href="#">
+            <p class="baslik" title="Toshiba Laptop BC234224">[Tokalaşma YOK] Toshiba Laptop BC234224 256GB SSD I7
+              İşlemci oshiba Laptop BC234224 256GB SSD I7 İşlemci </p>
+          </a></div>
+        <div class="y">
+
+          <div class="v">
+            <div class="v1">
+            </div>
+          </div>
+
+          <div class="z">
+            <div class="z_sol">
+              <div class="miktar">1</div>
+              <div class="birim">ADET</div>
+            </div>
+            <div class="z_sag">
+              <div class="ulke" title="Türkiye"><i class="fa fa-map-marker"></i><span>TR</span></div>
+              <div class="rate" title="Firma Puanı"><i class="fa fa-star"></i><span>4.5</span></div>
+            </div>
+          </div>
+
+          <div class="q">
+
+
+            <div class="ilan-ikonlar flex-orta">
+              <i class="fa fa-eye" title="İlanı Listeden Kaldırmak İçin Tıklayın"></i>
+              <i class="fa fa-calendar" title="Son teklif Tarihi: 09/12/2017 17:00"></i>
+              <i class="fa fa-language" title="Türkçe*/İngilizce/Fransızca"></i>
+              <i class="fa fa-picture-o" title="İlan Görseli"></i>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="ilan">
+        <div class="x" style="border-top: 3px solid coral;">
+          <div class="xt"><span title="İlan Numarası">KM345TER4</span>
+            <div class="tk-daire"></div>
+            <div class="favori"><i class="fa fa-bookmark" title="Favorilere Ekle" style="color:coral;"></i></div>
+          </div>
+          <a class="xa" href="#">
+            <p class="baslik" title="M8 torks başlı galvanizli vida">[Tokalaşma YOK] M8 torks başlı galvanizli vida</p>
+          </a></div>
+        <div class="y">
+          <div class="v">
+            <div class="v1">
+            </div>
+          </div>
+
+          <div class="z">
+            <div class="z_sol">
+              <div class="miktar">15000</div>
+              <div class="birim">KİLOGRAM</div>
+            </div>
+            <div class="z_sag">
+              <div class="ulke" title="Türkiye"><i class="fa fa-map-marker"></i><span>TR</span></div>
+              <div class="rate" title="Firma Puanı"><i class="fa fa-star"></i><span>4.5</span></div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="ilan-ikonlar flex-orta">
+              <i class="fa fa-eye" title="İlanı Listeden Kaldırmak İçin Tıklayın"></i>
+              <i class="fa fa-calendar" title="Son teklif Tarihi: 09/12/2017 17:00"></i>
+              <i class="fa fa-language" title="Türkçeye otomatik çeviri"></i>
+              <i class="fa fa-picture-o" style="color:#d86a6a;" title="İlan Görseli Yok"></i>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="ilan">
+        <div class="x" style="border-top: 3px solid #ccc;">
+          <div class="xt"><span title="İlan Numarası">AA45TER46</span>
+            <div class="tk-daire"></div>
+            <div class="favori"><i class="fa fa-bookmark" title="Favorilere Ekle" style="color:#ccc;"></i></div>
+          </div>
+          <a class="xa" href="#">
+            <p class="baslik" title="Antifriz">[Tokalaşma YOK] Antifriz</p>
+          </a></div>
+        <div class="y">
+          <div class="v">
+            <div class="v1">
+            </div>
+          </div>
+          <div class="z">
+            <div class="z_sol">
+              <div class="miktar">1000</div>
+              <div class="birim">LİTRE</div>
+            </div>
+            <div class="z_sag">
+              <div class="ulke" title="Türkiye"><i class="fa fa-map-marker"></i><span>TR</span></div>
+              <div class="rate" title="Firma Puanı"><i class="fa fa-star"></i><span>4.5</span></div>
+            </div>
+          </div>
+
+          <div class="q">
+
+
+            <div class="ilan-ikonlar flex-orta">
+              <i class="fa fa-eye-slash" style="color:#d86a6a;" title="İlan Listesine Eklemek için Tıklayın"></i>
+              <i class="fa fa-calendar" title="Son teklif Tarihi: 09/12/2017 17:00"></i>
+              <i class="fa fa-language" title="Türkçeye otomatik çeviri"></i>
+              <i class="fa fa-picture-o" title="İlan Görseli"></i>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="ilan">
+        <div class="x">
+          <div class="xt"><span title="İlan Numarası">E4345TER4</span>
+            <div class="tk-daire tk"></div>
+            <div class="favori"><i class="fa fa-bookmark" title="Favorilere Ekle"></i></div>
+          </div>
+          <a class="xa" href="#">
+            <p class="baslik" title="Toshiba Laptop BC234224  - [On MouseOut]">[Tokalaşma Var] Toshiba Laptop BC234224
+              256GB SSD I7 İşlemci </p>
+          </a></div>
+        <div class="y">
+
+          <div class="v">
+            <div class="v1">
+            </div>
+          </div>
+
+          <div class="z">
+            <div class="z_sol">
+              <div class="miktar">1</div>
+              <div class="birim">ADET</div>
+            </div>
+            <div class="z_sag">
+              <div class="ulke" title="Türkiye"><i class="fa fa-map-marker"></i><span>TR</span></div>
+              <div class="rate" title="Firma Puanı"><i class="fa fa-star"></i><span>4.5</span></div>
+            </div>
+          </div>
+
+          <div class="q">
+
+
+            <div class="ilan-ikonlar flex-orta">
+              <i class="fa fa-eye" title="İlanı Listeden Kaldırmak İçin Tıklayın"></i>
+              <i class="fa fa-calendar" title="Son teklif Tarihi: 09/12/2017 17:00"></i>
+              <i class="fa fa-language" title="Türkçe*/İngilizce/Fransızca"></i>
+              <i class="fa fa-picture-o" title="İlan Görseli"></i>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="ilan">
+        <div class="x" style="border-top: 3px solid coral;">
+          <div class="xt"><span title="İlan Numarası">KM345TER4</span>
+            <div class="tk-daire tk"></div>
+            <div class="favori"><i class="fa fa-bookmark" title="Favorilere Ekle" style="color:coral;"></i></div>
+          </div>
+          <a class="xa" href="#">
+            <p class="baslik" title="M8 torks başlı galvanizli vida - [On MouseOut]">[Tokalaşma Var] M8 torks başlı
+              galvanizli vida</p>
+          </a></div>
+        <div class="y">
+          <div class="v">
+            <div class="v1">
+            </div>
+          </div>
+
+          <div class="z">
+            <div class="z_sol">
+              <div class="miktar">15000</div>
+              <div class="birim">KİLOGRAM</div>
+            </div>
+            <div class="z_sag">
+              <div class="ulke" title="Türkiye"><i class="fa fa-map-marker"></i><span>TR</span></div>
+              <div class="rate" title="Firma Puanı"><i class="fa fa-star"></i><span>4.5</span></div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="ilan-ikonlar flex-orta">
+              <i class="fa fa-eye" title="İlanı Listeden Kaldırmak İçin Tıklayın"></i>
+              <i class="fa fa-calendar" title="Son teklif Tarihi: 09/12/2017 17:00"></i>
+              <i class="fa fa-language" title="Türkçeye otomatik çeviri"></i>
+              <i class="fa fa-picture-o" style="color:#d86a6a;" title="İlan Görseli Yok"></i>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="ilan">
+        <div class="x" style="border-top: 3px solid #ccc;">
+          <div class="xt"><span title="İlan Numarası">AA45TER46</span>
+            <div class="tk-daire tk"></div>
+            <div class="favori"><i class="fa fa-bookmark" title="Favorilere Ekle" style="color:#ccc;"></i></div>
+          </div>
+          <a class="xa" href="#">
+            <p class="baslik" title="Antifriz - [On MouseOut]">[Tokalaşma Var] Antifriz</p>
+          </a></div>
+        <div class="y">
+          <div class="v">
+            <div class="v1">
+            </div>
+          </div>
+          <div class="z">
+            <div class="z_sol">
+              <div class="miktar">1000</div>
+              <div class="birim">LİTRE</div>
+            </div>
+            <div class="z_sag">
+              <div class="ulke" title="Türkiye"><i class="fa fa-map-marker"></i><span>TR</span></div>
+              <div class="rate" title="Firma Puanı"><i class="fa fa-star"></i><span>4.5</span></div>
+            </div>
+          </div>
+
+          <div class="q">
+
+
+            <div class="ilan-ikonlar flex-orta">
+              <i class="fa fa-eye-slash" style="color:#d86a6a;" title="İlan Listesine Eklemek için Tıklayın"></i>
+              <i class="fa fa-calendar" title="Son teklif Tarihi: 09/12/2017 17:00"></i>
+              <i class="fa fa-language" title="Türkçeye otomatik çeviri"></i>
+              <i class="fa fa-picture-o" title="İlan Görseli"></i>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="ilan">
+        <div class="x">
+          <div class="xt"><span title="İlan Numarası">E4345TER4</span>
+            <div class="tk-daire"></div>
+            <div class="favori"><i class="fa fa-bookmark" title="Favorilere Ekle"></i></div>
+          </div>
+          <a class="xa" href="#">
+            <p class="baslik" title="Toshiba Laptop BC234224">[On MouseOver] ACG Elektronik Toshiba Laptop BC234224
+              256GB SSD I7 İşlemci</p>
+          </a></div>
+        <div class="y">
+
+          <div class="v">
+            <div class="v2"> Hemen Teklif Ver
+            </div>
+          </div>
+
+          <div class="z">
+            <div class="z_sol">
+              <div class="miktar">1</div>
+              <div class="birim">ADET</div>
+            </div>
+            <div class="z_sag">
+              <div class="ulke" title="Türkiye"><i class="fa fa-map-marker"></i><span>TR</span></div>
+              <div class="rate" title="Firma Puanı"><i class="fa fa-star"></i><span>4.5</span></div>
+            </div>
+          </div>
+
+          <div class="q">
+
+
+            <div class="ilan-ikonlar flex-orta">
+              <i class="fa fa-eye" title="İlanı Listeden Kaldırmak İçin Tıklayın"></i>
+              <i class="fa fa-calendar" title="Son teklif Tarihi: 09/12/2017 17:00"></i>
+              <i class="fa fa-language" title="Türkçe*/İngilizce/Fransızca"></i>
+              <i class="fa fa-picture-o" title="İlan Görseli"></i>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="ilan">
+        <div class="x" style="border-top: 3px solid coral;">
+          <div class="xt"><span title="İlan Numarası">KM345TER4</span>
+            <div class="tk-daire"></div>
+            <div class="favori"><i class="fa fa-bookmark" title="Favorilere Ekle" style="color:coral;"></i></div>
+          </div>
+          <a class="xa" href="#">
+            <p class="baslik" title="M8 torks başlı galvanizli vida">[On MouseOver] M8 torks galvanizli vida </p>
+          </a></div>
+        <div class="y">
+          <div class="v">
+            <div class="v3"> Tokalaşma Başlatıldı
+            </div>
+          </div>
+
+          <div class="z">
+            <div class="z_sol">
+              <div class="miktar">15000</div>
+              <div class="birim">KİLOGRAM</div>
+            </div>
+            <div class="z_sag">
+              <div class="ulke" title="Türkiye"><i class="fa fa-map-marker"></i><span>TR</span></div>
+              <div class="rate" title="Firma Puanı"><i class="fa fa-star"></i><span>4.5</span></div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="ilan-ikonlar flex-orta">
+              <i class="fa fa-eye" title="İlanı Listeden Kaldırmak İçin Tıklayın"></i>
+              <i class="fa fa-calendar" title="Son teklif Tarihi: 09/12/2017 17:00"></i>
+              <i class="fa fa-language" title="Türkçeye otomatik çeviri"></i>
+              <i class="fa fa-picture-o" style="color:#d86a6a;" title="İlan Görseli Yok"></i>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="ilan">
+        <div class="x" style="border-top: 3px solid #ccc;">
+          <div class="xt"><span title="İlan Numarası">AA45TER46</span>
+            <div class="tk-daire"></div>
+            <div class="favori"><i class="fa fa-bookmark" title="Favorilere Ekle" style="color:#ccc;"></i></div>
+          </div>
+          <a class="xa" href="#">
+            <p class="baslik" title="Antifriz">[On MouseOver] Antifriz</p>
+          </a></div>
+        <div class="y">
+          <div class="v">
+            <div class="v4">İlan Listesinden Silinmiş
+            </div>
+          </div>
+          <div class="z">
+            <div class="z_sol">
+              <div class="miktar">1000</div>
+              <div class="birim">LİTRE</div>
+            </div>
+            <div class="z_sag">
+              <div class="ulke" title="Türkiye"><i class="fa fa-map-marker"></i><span>TR</span></div>
+              <div class="rate" title="Firma Puanı"><i class="fa fa-star"></i><span>4.5</span></div>
+            </div>
+          </div>
+
+          <div class="q">
+
+
+            <div class="ilan-ikonlar flex-orta">
+              <i class="fa fa-eye-slash" style="color:#d86a6a;" title="İlan Listesine Eklemek için Tıklayın"></i>
+              <i class="fa fa-calendar" title="Son teklif Tarihi: 09/12/2017 17:00"></i>
+              <i class="fa fa-language" title="Türkçeye otomatik çeviri"></i>
+              <i class="fa fa-picture-o" title="İlan Görseli"></i>
+            </div>
+
+          </div>
+
+        </div>
+        <!-- satış ilan satırları son -->
+      </div>
+    </div>
+
+  </div>
+  <div style="text-align: center;    height: 90px;">
+    <pagination-controls id="paginationPosting"
+                         autoHide="true"
+                         previousLabel="{{'app.paginglist.previous' | translate}}"
+                         nextLabel="{{'app.paginglist.next' | translate}}"
+                         screenReaderPageLabel="page"
+                         screenReaderPaginationLabel="Pagination"
+                         screenReaderCurrentLabel="You're on page"
+                         (pageChange)="getPage($event)">
+    </pagination-controls>
+  </div>
+</kb-loading>
+
+<pre>{{ filterForm.getRawValue() | json}}</pre>

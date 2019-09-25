@@ -1,0 +1,162 @@
+<kb-loading [show]="loading" [showContentOnLoading]="showContentOnLoading">
+  <div class="wrapper wrapper-content animated fadeInRight"><!-- bu bölüme yeni parca eklendi -->
+    <div class="row"> <!-- firma temel bilgiler satir baslangic -->
+      <div class="col-lg-12">
+
+        <div class="ibox">
+          <div class="ibox-content2">
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="kb f_kolon_sol1">
+
+                  <div class="kb-firma_mini_logo_div1">
+                    <img alt="image"
+                         class="kb-firma_mini_logo1 shadow"
+                         [src]="imagePath">
+                  </div>
+                  <div class="row show-grid kb puan1">
+                    <div class="col-xs-4"><i class="fa fa-star"></i>
+                      <span>{{company.customerScore}}</span>
+                    </div>
+                    <div class="col-xs-4"><i class="fa fa-star"></i>
+                      <span>{{company.kobipScore}}</span>
+                    </div>
+                    <div class="col-xs-4"><i class="fa fa-star"></i>
+                      <span>{{(company.customerScore + company.kobipScore)/2}}</span>
+                    </div>
+                  </div>
+                  <div style="text-align:center;">
+                    <dd>{{company.internationalPhone}}</dd>
+                    <dd>{{company.internationalMail}}</dd>
+                    <dd>{{company.web}}</dd>
+                  </div>
+                  <div class="kb-firma_duzenle">
+                    <a class="btn btn-primary "
+                       [routerLink]="['/company/general/edit' | localize ,hash.encode(company.id)]"><i
+                      class="fa fa-pencil-square-o"></i>
+                      {{ 'general.companyEdit' | translate}}
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div *ngIf="company.isInternationalUsage === true" class="kb f_bilgi_kutu1">
+                  <span class="label label-primary" translate>general.nationalCompanyInfo</span>
+                  <h3 class="font-bold">
+                    {{company.internationalName}}
+                  </h3>
+                  <h4 title="Company Short Name"> {{company.internationalShortName}}
+                    <small *ngIf="company.idCompanyCategory === 'zz.companyCategory.realPerson'">(Real Person)</small>
+                    <small *ngIf="company.idCompanyCategory === 'zz.companyCategory.corporation'">(Corporation)</small>
+                  </h4>
+                  <hr>
+
+                  <dl class="m-t-md">
+                    <dt>Company Legal Address</dt>
+                    <dd>{{company.internationalAddress}}</dd>
+                    <dd>{{company.internationalAddress2}}</dd>
+                    <dd>{{company.postalCode}}&nbsp;{{company.intCityName}} {{company.enCountry}}</dd>
+                  </dl>
+                </div>
+                <div class="kb f_bilgi_kutu1">
+                  <span class="label label-primary" translate>general.localCompanyInfo</span>
+                  <h3 class="font-bold">
+                    {{company.localName}}
+                  </h3>
+                  <h4 title="Firma Kısa İsmi">{{company.localShortName}}
+                    <small>({{company.langCompanyCategory}})</small>
+                  </h4>
+                  <hr>
+
+                  <dl class="m-t-md">
+                    <dt translate>general.localAddress</dt>
+                    <dd>{{company.localAddress}}</dd>
+                    <dd>{{company.localAddress2}}</dd>
+                    <dd>{{company.postalCode}}&nbsp;{{company.localCityName}} / {{company.idCountry | translate}}</dd>
+                  </dl>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+          <!--  <div class="ibox-footer">
+                <span class="pull-right">
+                    Son güncelleme - <i class="fa fa-clock-o"></i> 14.08.2017 10:04 pm
+                </span>
+                Bilgilerin üzerine tıklayarak güncelleyebilirsiniz
+            </div> -->
+        </div>
+
+      </div>
+    </div> <!-- firma temel bilgiler son-->
+    <!-- iletisim bilgileri kutusu -->
+    <div class="row kb f_bilgi_kutu1 kb_muhatap">
+      <div class="col-md-12" translate>general.kobipContact</div>
+      <div class="col-md-4"><i class="fa fa-user-circle"></i><span>{{company.kobipAuthorizedPersonName}}</span></div>
+      <div class="col-md-4"><i class="fa fa-at"></i><span>{{company.kobipAuthorizedPersonMail}}</span></div>
+      <div class="col-md-4"><i class="fa fa-mobile-phone"></i><span>{{company.kobipAuthorizedPersonPhone}}</span>
+      </div>
+    </div>
+    <!-- iletisim bilgileri kutusu son-->
+    <br>
+    <!--satınalma satırları -->
+    <div class="row">
+      <div class="col-lg-12 ">
+        <div class="ibox float-e-margins kb ibox-kutu">
+          <div class="ibox-title">
+            <h5 translate>general.purchaseSettings</h5>
+            <iboxtools></iboxtools>
+          </div>
+          <div class="ibox-content">
+            <span class="label label-primary" translate>general.mostUsedUnits</span>
+            <div class="row show-grid kb birim1">
+              <ul class="list-horizontal check">
+                <li class="check" *ngFor="let unit of observableCompanyUnits | async">{{unit.display}}</li>
+              </ul>
+            </div>
+            <span class="label label-primary" translate>general.purchaseCountries</span>
+            <div class="row show-grid kb ulke_liste1">
+
+              <ul class="list-horizontal check">
+                <li class="check" style="width: 200px" *ngFor="let country of observablePurchasingCountries | async">
+                  {{country.id |
+                  translate}}
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <!-- satınalma satırları son -->
+    <br>
+    <!--satış satırları -->
+    <div class="row">
+      <div class="col-lg-12 ">
+        <div class="ibox float-e-margins kb ibox-kutu">
+          <div class="ibox-title">
+            <h5 translate>general.salesSettings</h5>
+            <iboxtools></iboxtools>
+          </div>
+          <div class="ibox-content">
+            <span class="label label-primary" translate>general.salesCountries</span>
+            <div class="row show-grid">
+              <ul class="list-horizontal">
+                <li class="check" style="width: 200px" *ngFor="let country of observableSalesCountries | async">
+                  {{country.id |
+                  translate}}
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</kb-loading>

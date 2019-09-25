@@ -1,0 +1,30 @@
+{
+  "/api": {
+    "target": "http://18.220.12.57/api",
+    "secure": false,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  },
+  "/signalr": {
+    "target": "http://localhost:53431/signalr",
+    "secure": false,
+    "pathRewrite": {
+      "^/signalr": ""
+    }
+  },
+  "/kobipChatHub": {
+    "target": "http://localhost:53431/kobipChatHub",
+    "secure": false,
+    "pathRewrite": {
+      "^/kobipChatHub": ""
+    }
+  },
+  "/googlebucket/api": {
+    "target": "http://localhost:60612/api",
+    "secure": false,
+    "pathRewrite": {
+      "^/googlebucket/api": ""
+    }
+  }
+}

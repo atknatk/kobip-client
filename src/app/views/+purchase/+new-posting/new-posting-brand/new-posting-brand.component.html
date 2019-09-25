@@ -1,0 +1,30 @@
+<ul class="i23e" title="{{'posting.brandForPosting' | translate}}">
+  <li *ngFor="let brand of postingBrandList; let idx=index;">
+    {{getDisplay(brand)}}
+    &nbsp;
+    <i class="fa fa-times"
+       *ngIf="isEdit"
+       (click)="removeBrand(idx)"></i>
+  </li>
+</ul>
+<div *ngIf="isEdit" class="i22ec">
+  <div class="i22e">
+    <input class="i22x"
+           [(ngModel)]="edittingBrand.brand"
+           placeholder="{{'posting.brand' | translate}}"
+           type="text">
+    <input class="i22x"
+           [(ngModel)]="edittingBrand.model"
+           placeholder="{{'posting.model' | translate}}"
+           type="text">
+    <input class="i22x"
+           [(ngModel)]="edittingBrand.orderCode"
+           placeholder="{{'posting.orderCode' | translate}}"
+           type="text">
+  </div>
+  <div class="i22eb">
+    <button class="btn btn-sm fa fa-plus"
+            [disabled]="!isValid()"
+            (click)="addBrand()"></button>
+  </div>
+</div>

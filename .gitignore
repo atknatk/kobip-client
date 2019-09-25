@@ -1,0 +1,7 @@
+node_modules
+.idea
+code/artifacts
+artifacts
+package-lock.json
+*.log
+dist

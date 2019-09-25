@@ -1,0 +1,571 @@
+<kb-loading [show]="loading" [showContentOnLoading]="showContentOnLoading">
+  <div class="wrapper wrapper-content animated fadeInRight"><!-- bu bölüme yeni parca eklendi -->
+    <form novalidate class="form-horizontal" [formGroup]="form">
+      <div class="row"> <!-- firma temel bilgiler satir baslangic -->
+        <div class="col-lg-12">
+
+          <div class="ibox">
+            <div class="ibox-content2">
+              <fieldset>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="kb" formGroupName="user">
+                      <div class="kb-firma_mini_logo_div1">
+                        <img alt="image"
+                             (click)="filecrop.openFileUpload(imagePath)"
+                             class="kb-firma_mini_logo1 shadow"
+                             [src]="imagePath">
+                      </div>
+                      <div class="form-group">
+                        <label class="col-xs-4 control-label" translate>shared.name</label>
+                        <div class="col-xs-8">
+                          <input placeholder="{{'shared.name' | translate}}"
+                                 class="form-control"
+                                 type="text"
+                                 formControlName="name"></div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-xs-4 control-label" translate>shared.middleName</label>
+                        <div class="col-xs-8">
+                          <input placeholder="{{'shared.middleName' | translate}}"
+                                 class="form-control"
+                                 type="text"
+                                 formControlName="middleName"></div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-xs-4 control-label" translate>shared.surname</label>
+                        <div class="col-xs-8">
+                          <input placeholder="{{'shared.surname' | translate}}"
+                                 class="form-control"
+                                 type="text"
+                                 formControlName="surname"></div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-xs-4 control-label" translate>shared.email</label>
+                      <div class="col-xs-8">
+                        <input placeholder="{{'shared.email' | translate}}"
+                               class="form-control"
+                               formControlName="companyBasedMail"
+                               type="email">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-xs-4 control-label" translate>shared.phone</label>
+                      <div class="col-xs-8">
+                        <input placeholder="{{'shared.phone'| translate}}"
+                               class="form-control"
+                               [mask]="'phone'"
+                               [maskOptions]="getPhoneMaskOptions(0)"
+                               formControlName="companyBasedPhone"
+                               type="text">
+                        <img *ngIf="flag.get(0)"
+                             style="position: absolute; right: 20px;top: 1px;"
+                             src="{{getFlagUrl(0)}}">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="kb f_bilgi_kutu1 kb-f_duzenle_kutu">
+                      <fieldset>
+                        <div class="kb disable-box" style="display: none;">
+                          <label>Kullanılmıyor</label>
+                        </div>
+                        <span class="label label-primary" translate>personal.intIdentity</span>
+                        <div class="row" style="margin-top: 10px">
+                          <div class="col-md-12">
+                            <label>Name <span>({{'shared.onlyLatin' | translate}})</span></label>
+                            <input placeholder="{{'shared.name' | translate}}"
+                                   class="form-control"
+                                   formControlName="intName"
+                                   type="text">
+                          </div>
+                          <div class="col-md-12">
+                            <label class="col-md-12 no-padding">Phone</label>
+                            <div class="col-md-8 kb phone-with-external" style="padding: 0 5px 0 0;">
+                              <input placeholder="Phone"
+                                     class="form-control"
+                                     [mask]="'phone'"
+                                     [maskOptions]="getPhoneMaskOptions(1)"
+                                     type="text"
+                                     formControlName="intLandPhone">
+                              <img *ngIf="flag.get(1)"
+                                   class="kb md-flag"
+                                   style="position: absolute; right: 10px;top: 1px;"
+                                   src="{{getFlagUrl(1)}}">
+                            </div>
+                            <div class="col-md-4 kb phone-with-external" style="padding: 0 0 0 5px;">
+                              <input placeholder="{{'personal.internalPhoneNumber' | translate}}"
+                                     class="form-control" type="text"
+                                     formControlName="intLandPhoneInternal">
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <label>Mobile Phone</label>
+                            <input placeholder="Cep Telefon"
+                                   class="form-control"
+                                   [mask]="'phone'"
+                                   [maskOptions]="getPhoneMaskOptions(2)"
+                                   formControlName="intMobilePhone"
+                                   type="text">
+                            <img *ngIf="flag.get(2)"
+                                 style="position: absolute; right: 20px;top: 24px;"
+                                 src="{{getFlagUrl(2)}}">
+                          </div>
+                          <div class="col-md-12">
+                            <label>Purchasing Email ({{'shared.optional' | translate}})</label>
+                            <input placeholder="Satınalma Eposta"
+                                   class="form-control"
+                                   kb-validation
+                                   email
+                                   formControlName="intPurchasingMail"
+                                   type="text">
+                          </div>
+                          <div class="col-md-12">
+                            <label>Sales Email ({{'shared.optional' | translate}})</label>
+                            <input placeholder="Sales Email ({{'shared.optional' | translate}})"
+                                   class="form-control"
+                                   formControlName="intSalesMail"
+                                   type="text"
+                                   value="sales@gmail.com">
+                          </div>
+                        </div>
+                      </fieldset>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="kb f_bilgi_kutu1 kb-f_duzenle_kutu">
+                      <fieldset>
+                        <span class="label label-primary" translate>personal.localIdentity</span>
+                        <div class="row" style="margin-top: 10px">
+                          <div class="col-md-12">
+                            <label translate>shared.name</label>
+                            <input placeholder="{{'shared.name' | translate}}"
+                                   class="form-control"
+                                   formControlName="localName"
+                                   type="text">
+                          </div>
+                          <div class="col-md-12">
+                            <label class="col-md-12 no-padding" translate>shared.phone</label>
+                            <div class="col-md-8 kb phone-with-external" style="padding: 0 5px 0 0;">
+                              <input placeholder="{{'shared.phone' | translate}}"
+                                     class="form-control"
+                                     [mask]="'phone'"
+                                     [maskOptions]="getPhoneMaskOptions(3)"
+                                     type="text"
+                                     formControlName="localLandPhone">
+                              <img *ngIf="flag.get(3)"
+                                   class="kb md-flag"
+                                   style="position: absolute; right: 10px;top: 1px;"
+                                   src="{{getFlagUrl(3)}}">
+                            </div>
+                            <div class="col-md-4 kb phone-with-external" style="padding: 0 0 0 5px;">
+                              <input placeholder="{{'personal.internalPhoneNumber' | translate}}"
+                                     class="form-control" type="text"
+                                     formControlName="localLandPhoneInternal">
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <label translate>shared.mobilePhone</label>
+                            <input placeholder="{{'shared.mobilePhone' | translate}}"
+                                   class="form-control"
+                                   [mask]="'phone'"
+                                   [maskOptions]="getPhoneMaskOptions(4)"
+                                   formControlName="localMobilePhone"
+                                   type="text">
+                            <img *ngIf="flag.get(4)"
+                                 style="position: absolute; right: 20px;top: 24px;"
+                                 src="{{getFlagUrl(4)}}">
+                          </div>
+                          <div class="col-md-12">
+                            <label>{{'shared.purchasing' | translate}}
+                              {{'shared.email' | translate}}
+                              ({{'shared.optional' | translate}})</label>
+                            <input placeholder="{{'shared.purchasing' | translate}} {{'shared.email' | translate}}"
+                                   class="form-control"
+                                   kb-validation
+                                   email
+                                   formControlName="localPurchasingMail"
+                                   type="text">
+                          </div>
+                          <div class="col-md-12">
+                            <label>{{'shared.sales' | translate}}
+                              {{'shared.email' | translate}}
+                              ({{'shared.optional' | translate}})</label>
+                            <input placeholder="Sales Email ({{'shared.optional' | translate}})"
+                                   class="form-control"
+                                   formControlName="localSalesMail"
+                                   type="text">
+                          </div>
+                        </div>
+                      </fieldset>
+                    </div>
+
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <div class="row">
+                  <!--kişisel anasayfa ayarları-->
+                  <div class="col-md-8 col-md-offset-4">
+                    <div class="kb f_bilgi_kutu1">
+                      <h4 class="font-bold" translate>personal.homepageSettings</h4>
+                      <hr>
+                      <fieldset>
+                        <div class="row">
+                          <div class="col-xs-6">
+                            <label class="font-bold control-label" translate>personal.kobipLang</label>
+                          </div>
+                          <div class="col-xs-6">
+                            <select class="form-control m-b" formControlName="idKobipSiteLanguage">
+                              <option *ngFor="let option of observableLanguage | async"
+                                      [value]="option.id">{{ option.display }}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-6">
+                            <label class="font-bold control-label" translate>personal.homepage</label>
+                          </div>
+                          <div class="col-xs-6">
+                            <select class="form-control m-b" formControlName="idInitialPage">
+                              <option *ngFor="let option of observableInitialPage | async"
+                                      [value]="option.id">{{ option.display }}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-6">
+                            <label class="font-bold control-label">Yardım Kutucukları</label>
+                          </div>
+                          <div class="col-xs-6">
+                            <div class="switch m-b" style="margin-top: 5px;">
+                              <div class="onoffswitch">
+                                <input type="checkbox"
+                                       formControlName="isHelpOpen"
+                                       class="onoffswitch-checkbox m-b"
+                                       id="isHelpOpen">
+                                <label class="onoffswitch-label" for="isHelpOpen">
+                                  <span class="onoffswitch-inner"></span>
+                                  <span class="onoffswitch-switch"></span>
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-6">
+                            <label class="font-bold control-label" translate>personal.yourLang</label>
+                          </div>
+                          <div class="col-xs-6">
+                            <kb-select
+                              formControlName="employeeLanguageList"
+                              [multiple]="true"
+                              css="m-b"
+                              [allowClear]="true"
+                              [observableOptions]="observableLanguage">
+                            </kb-select>
+                          </div>
+                        </div>
+                      </fieldset>
+                    </div>
+                  </div>
+                  <!-- kişisel anasayfa ayarları son -->
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </div> <!-- firma temel bilgiler son-->
+      <!--yetki satırları -->
+      <div class="row">
+        <div class="col-lg-12 ">
+          <div class="ibox collapsed kb ibox-kutu">
+            <div class="ibox-title">
+              <h5 translate>personal.kobipAuthorization</h5>
+              <iboxtools></iboxtools>
+            </div>
+            <div class="ibox-content">
+              <kb-auth-roles></kb-auth-roles>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <!-- yetki satirlari son -->
+      <br>
+
+      <!--satınalma satırları -->
+      <div class="row">
+        <div class="col-lg-12 ">
+          <div class="ibox kb ibox-kutu">
+            <div class="ibox-title">
+              <h5 translate>personal.purchasingSettings</h5>
+              <iboxtools></iboxtools>
+            </div>
+            <div class="ibox-content">
+              <span class="label label-primary" translate>personal.deliverySettings</span>
+              <fieldset>
+                <div class="row show-grid kb birim1 m-b-none">
+                  <div class="col-xs-12 col-md-6">
+                    <label translate>personal.showDelivery</label>
+                  </div>
+                  <div class="col-xs-12 col-md-6" style="padding-top: 12px;padding-bottom: 11px;">
+                    <div class="onoffswitch">
+                      <input type="checkbox"
+                             formControlName="isDeliveryTabOpen"
+                             class="onoffswitch-checkbox"
+                             id="isDeliveryTabOpen">
+                      <label style="margin: 0;" class="onoffswitch-label" for="isDeliveryTabOpen">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row show-grid kb birim1 m-t-none m-b-none">
+                  <div class="col-xs-12 col-md-6">
+                    <label translate>personal.showDeliveryNote</label>
+                  </div>
+                  <div class="col-xs-12 col-md-6" style="padding-top: 12px;padding-bottom: 11px;">
+                    <div class="onoffswitch">
+                      <input type="checkbox"
+                             formControlName="isOnlyDeliveryNoteVisible"
+                             class="onoffswitch-checkbox"
+                             id="isOnlyDeliveryNoteVisible">
+                      <label style="margin: 0;" class="onoffswitch-label" for="isOnlyDeliveryNoteVisible">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row show-grid kb birim1 m-t-none m-b-none">
+                  <div class="col-xs-12 col-md-6">
+                    <label translate>personal.deliveryTime</label>
+                  </div>
+                  <div class="col-xs-12 col-md-6" style="padding :0;">
+                    <select class="form-control"
+                            formControlName="idDeliveryDuration"
+                            style="height: 43px; border: none">
+                      <option *ngFor="let option of observableDeliveryDuration | async"
+                              [value]="option.id">{{ option.display }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row show-grid kb birim1 m-t-none m-b-none">
+                  <div class="col-xs-12 col-md-6">
+                    <label translate>personal.preferredTransportationType</label>
+                  </div>
+                  <div class="col-xs-12 col-md-6" style="padding-top: 11px;padding-bottom: 11px;">
+                    <i class="fa fa-ship kb personal-delivery-icon edit"
+                       [class.active]="transportType.indexOf('zz.transportationType.seaway') !== -1"
+                       (click)="toggleTransportType('zz.transportationType.seaway')">
+                    </i>
+                    <i class="fa fa-truck kb personal-delivery-icon edit"
+                       [class.active]="transportType.indexOf('zz.transportationType.road') !== -1"
+                       (click)="toggleTransportType('zz.transportationType.road')"></i>
+                    <i class="fa fa-plane kb personal-delivery-icon edit"
+                       [class.active]="transportType.indexOf('zz.transportationType.airway') !== -1"
+                       (click)="toggleTransportType('zz.transportationType.airway')"></i>
+                  </div>
+                </div>
+                <div class="row show-grid kb birim1 m-t-none m-b-none">
+                  <div class="col-xs-12 col-md-6">
+                    <label translate>personal.deliveryType</label>
+                  </div>
+                  <div class="col-xs-12 col-md-6"
+                       style="padding-top: 5px;padding-bottom: 6px; padding-left: 3px;padding-right: 3px">
+                    <kb-select
+                      formControlName="employeeDeliveryTypeList"
+                      [multiple]="true"
+                      css=""
+                      [allowClear]="true"
+                      [observableOptions]="observableDeliveryType">
+                    </kb-select>
+                  </div>
+                </div>
+                <div class="row show-grid kb birim1 m-t-none m-b-none">
+                  <div class="col-xs-12 col-md-6" style="height: 154px;">
+                    <label style="margin-top: 11%;" translate>personal.deliveryNote</label>
+                  </div>
+                  <div class="col-xs-12 col-md-6" style="padding: 3px 0;">
+                    <div class="row m-n">
+                      <div class="col-xs-12 col-md-5" style="border: none; padding-bottom: 0; padding-right: 3px;">
+                        <select class="form-control"
+                                formControlName="tmpIdDeliveryNote"
+                                style="padding-right: 0;">
+                          <option [value]="null" translate>component.select</option>
+                          <option *ngFor="let notes of deliveryNoteList"
+                                  value="{{notes | json}}">{{ notes.key }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-xs-12 col-md-4" style="border: none; padding-bottom: 0; padding-left: 3px;">
+                        <select class="form-control"
+                                formControlName="tmpIdDeliveryNoteLang"
+                                style="padding-left: 0">
+                          <option [value]="null" translate>component.select</option>
+                          <option *ngFor="let option of observableLanguage | async"
+                                  [value]="option.id">{{ option.display }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-xs-12 col-md-3" style="border: none; padding: 16px 0 0;">
+                        <div class="personal-delivery-note">
+                          <div class="kb personal-delivery-note-action">
+                            <span class="remove"
+                                  [ngClass]="toggleDeliveryNoteRemove() ? 'disable' : ''"
+                                  (click)="onRemoveDeliveryNote()"
+                                  translate>app.general.remove</span>
+                          </div>
+                          <div class="kb personal-delivery-note-action">
+                            <span class="save"
+                                  [ngClass]="toggleDeliveryNoteSave() ? 'disable' : ''"
+                                  (click)="onSaveOrUpdadeDeliveryNote()" translate>app.general.save</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row m-n">
+                      <div class="col-xs-12 kb personal-delivery-comment">
+                        <textarea rows="4" formControlName="tmpIdDeliveryNoteDescription"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <div class="m-t">
+                  <span class="label label-primary" translate>general.purchaseCountries</span>
+                </div>
+                <div>
+                  <br>
+                  <kb-duallist #purchasinglist
+                               (selectedListChangedEvent)="purchasingSelectedListEvent($event)"></kb-duallist>
+                </div>
+              </fieldset>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <!-- satınalma satırları son -->
+      <br>
+      <!--satış satırları -->
+      <div class="row">
+        <div class="col-lg-12 ">
+          <div class="ibox float-e-margins kb ibox-kutu">
+            <div class="ibox-title">
+              <h5 translate>personal.salesSettings</h5>
+              <iboxtools></iboxtools>
+            </div>
+            <div class="ibox-content">
+              <span class="label label-primary" translate>personal.deliverySettings</span>
+              <fieldset>
+                <div class="row show-grid kb birim1 m-b-none">
+                  <div class="col-xs-12 col-md-6">
+                    <label translate>personal.isOnlyPartnerPostingVisible</label>
+                  </div>
+                  <div class="col-xs-12 col-md-6" style="padding-top: 12px;padding-bottom: 11px;">
+                    <div class="onoffswitch">
+                      <input type="checkbox"
+                             formControlName="isOnlyPartnerPostingVisible"
+                             class="onoffswitch-checkbox"
+                             id="isOnlyPartnerPostingVisible">
+                      <label style="margin: 0;" class="onoffswitch-label" for="isOnlyPartnerPostingVisible">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row show-grid kb birim1 m-t-none m-b-none">
+                  <div class="col-xs-12 col-md-6">
+                    <label translate>personal.isAscendingPostingList</label>
+                  </div>
+                  <div class="col-xs-12 col-md-6" style="padding-top: 12px;padding-bottom: 11px;">
+                    <div class="onoffswitch">
+                      <input type="checkbox"
+                             formControlName="isAscendingPostingList"
+                             class="onoffswitch-checkbox"
+                             id="isAscendingPostingList">
+                      <label style="margin: 0;" class="onoffswitch-label" for="isAscendingPostingList">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row show-grid kb birim1 m-t-none m-b-none">
+                  <div class="col-xs-12 col-md-6">
+                    <label translate>personal.isLastDatePosting</label>
+                  </div>
+                  <div class="col-xs-12 col-md-6" style="padding-top: 12px;padding-bottom: 11px;">
+                    <div class="onoffswitch">
+                      <input type="checkbox"
+                             formControlName="isLastDatePosting"
+                             class="onoffswitch-checkbox"
+                             id="isLastDatePosting">
+                      <label style="margin: 0;" class="onoffswitch-label" for="isLastDatePosting">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <div class="m-t">
+                  <span class="label label-primary" translate>general.salesCountries</span>
+                </div>
+                <div>
+                  <br>
+                  <kb-duallist #saleslist
+                               (selectedListChangedEvent)="salesSelectedListEvent($event)"></kb-duallist>
+                </div>
+              </fieldset>
+              <fieldset>
+                <div class="m-t">
+                  <span class="label label-primary" translate>personal.salesCategories</span>
+                </div>
+                <div class="m-t">
+                  <kb-duallist-category-employee #categoryList
+                                                 (selectedListChangedEvent)="categorySelectedListEvent($event)">
+                  </kb-duallist-category-employee>
+                </div>
+              </fieldset>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- satış satırları son -->
+      <div class="row">
+        <div class="col-lg-12 ">
+          <div class="ibox float-e-margins kb ibox-kutu">
+            <div class="ibox-content" style="min-height: 65px;">
+              <div style="float: right;">
+                <button class="btn btn-primary"
+                        type="button"
+                        (click)="updatePersonal()">{{'app.general.update'| translate}}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</kb-loading>
+
+
+<kb-filecrop #filecrop (uploadFinishEvent)="uploadFinishEvent($event)"></kb-filecrop>
+
+
+

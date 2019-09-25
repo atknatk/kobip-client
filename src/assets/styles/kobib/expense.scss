@@ -1,0 +1,53 @@
+
+.kb-bakiye1 {
+  padding-top: 10px;
+  > div div {
+    display: inline-block;
+    &:first-child {
+      width: 60%;
+    }
+    &:last-child {
+      width: 40%;
+    }
+  }
+}
+
+.kb-bakiye2_satir > div div {
+  display: inline-block;
+  &:first-child {
+    width: 22%;
+  }
+  &:nth-child(2) {
+    width: 23%;
+  }
+  &:nth-child(3) {
+    width: 55%;
+  }
+}
+
+.kb-bakiye2_baslik {
+  > div {
+    div {
+      font-weight: bold;
+      padding: 0px 0 5px 0;
+    }
+    padding: 0 20px 0 5px;
+  }
+  margin: 10px 0 0 0;
+}
+
+.kb-bakiye2 {
+  > div {
+    div {
+      display: inline-block;
+    }
+    line-height: 20px;
+    padding: 0 5px;
+    &:nth-child(even) {
+      background-color: #ddd;
+    }
+  }
+  border: 1px solid #ccc;
+  overflow-y: scroll;
+  max-height: 250px;
+}

@@ -1,0 +1,294 @@
+<kb-loading [show]="loading">
+  <div class="wrapper wrapper-content animated fadeInRight"><!-- bu bölüme yeni parca eklendi -->
+    <form novalidate class="form-horizontal" [formGroup]="form">
+      <div class="row"> <!-- firma temel bilgiler satir baslangic -->
+        <div class="col-lg-12">
+          <div class="ibox">
+            <div class="ibox-content2">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="kb f_kolon_sol1">
+
+                    <div class="kb-firma_mini_logo_div1">
+                      <img alt="image"
+                           (click)="filecrop.openFileUpload(imagePath)"
+                           class="kb-firma_mini_logo1 shadow"
+                           [src]="imagePath">
+                    </div>
+                    <div>
+                      <div class="form-group">
+                        <label class="col-xs-4 control-label" translate>shared.phone</label>
+                        <!---->
+                        <div class="col-xs-8">
+                          <input placeholder="{{'shared.phone' | translate}}"
+                                 class="form-control"
+                                 type="text"
+                                 [mask]="'phone'"
+                                 [maskOptions]="getPhoneMaskOptions()"
+                                 formControlName="phone">
+                          <img *ngIf="flag"
+                               style="position: absolute; right: 20px;top: 1px;"
+                               src="{{getFlagUrl()}}">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-xs-4 control-label" translate>shared.email</label>
+                        <div class="col-xs-8">
+                          <input placeholder="Email"
+                                 email
+                                 [maxlength]="200"
+                                 formControlName="internationalMail"
+                                 kb-validation
+                                 class="form-control "
+                                 type="email"></div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-xs-4 control-label" translate>general.web</label>
+                        <div class="col-xs-8">
+                          <input placeholder="{{'general.web' | translate}}"
+                                 class="form-control"
+                                 formControlName="web"
+                                 [mask]="'url'"
+                                 type="text"></div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-xs-4 control-label" translate>general.taxNo</label>
+                        <div class="col-xs-8">
+                          <input formControlName="taxNo"
+                                 kb-validation
+                                 required
+                                 [maxlength]="50"
+                                 class="form-control"
+                                 type="text"></div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-xs-4 control-label" translate>general.companyCity</label>
+                        <div class="col-xs-8">
+                          <div class="input-group">
+                            <input class="form-control"
+                                   formControlName="localCityName"
+                                   type="text">
+                            <span class="input-group-btn">
+                              <button type="button"
+                                      (click)="getLocation()"
+                                      class="btn btn-primary">
+                              <i class="fa fa-map-marker"></i>
+                              </button>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-xs-4 control-label" translate>general.companyType</label>
+                        <div class="col-xs-8">
+                          <select class="form-control m-b"
+                                  formControlName="idCompanyCategory">
+                            <option *ngFor="let option of observableCompanyCategory | async"
+                                    [value]="option.id">{{ option.display | translate }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="kb f_bilgi_kutu1 kb-f_duzenle_kutu">
+                    <div><span class="label label-primary" translate>general.nationalCompanyInfo</span>
+                      <span>(Sadece Latin Harfleri)</span></div>
+                    <div translate></div>
+                    <input placeholder="{{'general.intCompanyName' | translate}}"
+                           formControlName="internationalName"
+                           class="form-control"
+                           type="text">
+                    <div translate>general.localShortName</div>
+                    <input placeholder="{{'general.localShortName' | translate}}"
+                           class="form-control"
+                           type="text"
+                           formControlName="internationalShortName">
+                    <div translate>general.intAddress</div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <input placeholder="{{'general.intAddress' | translate}}"
+                               class="form-control"
+                               formControlName="internationalAddress"
+                               type="text">
+                        <!--<div><span>{{intCityCountry}}</span></div>-->
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <input placeholder="{{'general.intAddress' | translate}} 2"
+                               class="form-control"
+                               formControlName="internationalAddress2"
+                               type="text">
+                        <div><span>{{intCityCountry}}</span></div>
+                      </div>
+                      <!--    <div class="col-md-6">
+                            <div>E-Posta Ekle</div>
+                            <div>Telefon Ekle</div>
+                          </div>-->
+                    </div>
+                  </div>
+                  <div class="kb f_bilgi_kutu1 kb-f_duzenle_kutu">
+                    <div><span class="label label-primary" translate>general.localCompanyInfo</span></div>
+                    <div translate>general.localName</div>
+                    <input placeholder="{{'general.localName' | translate}}"
+                           class="form-control"
+                           type="text"
+                           formControlName="localName">
+                    <div translate>general.localShortName</div>
+                    <input placeholder="{{'general.localShortName' | translate}}"
+                           class="form-control"
+                           type="text"
+                           formControlName="localShortName">
+                    <div translate>general.localAddress</div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <input placeholder="{{'general.localAddress' | translate}}"
+                               class="form-control"
+                               type="text"
+                               formControlName="localAddress">
+                      </div>
+                      <div class="col-md-12">
+                        <input placeholder="{{'general.localAddress' | translate}} 2"
+                               class="form-control"
+                               type="text"
+                               formControlName="localAddress2">
+                      </div>
+                      <div class="col-md-12">
+                        <input placeholder="{{'general.postalCode' | translate}}"
+                               class="form-control"
+                               formControlName="postalCode"
+                               type="text">
+                        <div><span>{{localCityCountry}}</span></div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> <!-- firma temel bilgiler son-->
+      <!-- iletisim bilgileri kutusu -->
+      <div class="row kb f_bilgi_kutu1 kb-muhatap_duzenle">
+        <div class="col-md-12" translate>general.kobipContact</div>
+        <div class="col-md-4">
+          <div class="input-group m-b">
+            <span class="input-group-addon">
+              <i class="fa fa-user-circle"></i>
+            </span>
+            <input placeholder="{{'general.kobipContactUser' | translate}}"
+                   formControlName="kobipAuthorizedPersonName"
+                   class="form-control"
+                   type="text"></div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group m-b">
+            <span class="input-group-addon"><i class="fa fa-at"></i></span>
+            <input placeholder="{{'general.kobipContactUserMail' | translate}}"
+                   class="form-control"
+                   formControlName="kobipAuthorizedPersonMail"
+                   type="email"
+                   value="aliaktas@gmail.com"></div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group m-b">
+            <span class="input-group-addon"><i class="fa fa-mobile-phone"></i></span>
+            <input placeholder="{{'general.kobipContactUserPhone' | translate}}"
+                   class="form-control"
+                   formControlName="kobipAuthorizedPersonPhone"
+                   type="email"></div>
+        </div>
+      </div>
+      <!-- iletisim bilgileri kutusu son-->
+      <br>
+
+      <!--satınalma satırları -->
+      <div class="row">
+        <div class="col-lg-12 ">
+          <div class="ibox float-e-margins kb ibox-kutu">
+            <div class="ibox-title">
+              <h5 translate>general.purchaseSettings</h5>
+              <iboxtools></iboxtools>
+            </div>
+            <div class="ibox-content">
+              <span class="label label-primary" translate>general.mostUsedUnits</span>
+              <div class="row show-grid kb birim1">
+                <kb-select
+                  formControlName="companyUnitList"
+                  [multiple]="true"
+                  [allowClear]="true"
+                  [observableOptions]="observableUnit">
+                </kb-select>
+              </div>
+              <span class="label label-primary" translate>general.purchaseCountries</span>
+              <div id="form" action="#" class="wizard-big">
+                <br>
+                <kb-duallist #purchasinglist
+                             [loadObservable]="_enum.country()"
+                             (loadedDataEvent)="loadedPurchasingCountry($event)"
+                             (selectedListChangedEvent)="purchasingSelectedListEvent($event)"></kb-duallist>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <!-- satınalma satırları son -->
+      <br>
+      <!--satış satırları -->
+      <div class="row">
+        <div class="col-lg-12 ">
+          <div class="ibox float-e-margins kb ibox-kutu">
+            <div class="ibox-title">
+              <h5 translate>general.salesSettings</h5>
+              <iboxtools></iboxtools>
+            </div>
+            <div class="ibox-content">
+              <span class="label label-primary" translate>general.salesCountries</span>
+              <div class="row show-grid">
+                <kb-duallist #saleslist
+                             [loadObservable]="_enum.country()"
+                             (loadedDataEvent)="loadedSalesCountry($event)"
+                             (selectedListChangedEvent)="salesSelectedListEvent($event)"></kb-duallist>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <!-- satış satırları son -->
+
+      <br>
+
+
+      <div class="row">
+        <div class="col-lg-12 ">
+          <div class="ibox float-e-margins kb ibox-kutu">
+            <div class="ibox-content" style="min-height: 65px;">
+              <div style="float: right;">
+                <button class="btn btn-primary"
+                        type="button"
+                        (click)="updateCompany()">{{'app.general.update'| translate}}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+    </form>
+  </div>
+</kb-loading>
+
+
+<kb-filecrop #filecrop [aspectRatio]="16/9" (uploadFinishEvent)="uploadFinishEvent($event)"></kb-filecrop>

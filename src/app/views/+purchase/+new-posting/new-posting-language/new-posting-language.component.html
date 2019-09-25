@@ -1,0 +1,28 @@
+<div *ngFor="let detail of postingDetailList; let idx = index" class="dil">
+  <div class="btn-group">
+    <label class="btn btn-default btn-sm" (click)="selectLanguage(detail.idLanguage)">
+      <span *ngIf="selectedLanguage === detail.idLanguage"
+            class="fa fa-check"></span> &nbsp;{{detail.idLanguage | translate}}
+    </label>
+    <label class="btn btn-default btn-sm" (click)="removeLanguage(idx)">
+      <span class="fa fa-remove"></span></label>
+  </div>
+</div>
+<div class="dil">
+  <div class="btn-group" dropdown>
+    <button dropdownToggle
+            type="button"
+            style="background-color: #4484c1;border-color: #4484c1;"
+            class="btn btn-primary btn-sm dropdown-toggle">{{'app.general.language' | translate}} &nbsp;<span
+      class="caret"></span>
+    </button>
+    <ul *dropdownMenu
+        style="min-width: 100px;"
+        class="dropdown-menu"
+        role="menu">
+      <li *ngFor="let language of languageObservable | async" role="menuitem">
+        <a class="dropdown-item" (click)="addOrSelectLanguage(language.id)" translate>{{language.id}}</a>
+      </li>
+    </ul>
+  </div>
+</div>

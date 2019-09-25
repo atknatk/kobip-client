@@ -1,0 +1,88 @@
+<div class="middle-box text-center loginscreen   animated fadeInDown">
+  <div>
+    <div>
+
+      <h1 class="logo-name">IN+</h1>
+
+    </div>
+    <h3>Register to IN+</h3>
+    <p>Create account to see it in action.</p>
+    <kb-loading [show]="loading">
+      <form class="m-t" [formGroup]="form" novalidate>
+        <div>
+
+          <div class="form-group">
+            <div class="form-group">
+              <input required
+                     kb-validation
+                     class="form-control"
+                     formControlName="taxNo"
+                     errorMessageResourceParam="auth.register.taxNo"
+                     placeholder="{{'auth.register.taxNo' | translate}}">
+            </div>
+
+            <div class="form-group">
+              <input required
+                     kb-validation
+                     class="form-control"
+                     formControlName="localShortName"
+                     errorMessageResourceParam="auth.register.localShortName"
+                     placeholder="{{'auth.register.localShortName' | translate}}">
+            </div>
+
+
+            <input required
+                   email
+                   kb-validation
+                   class="form-control"
+                   formControlName="rootMail"
+                   errorMessageResourceParam="auth.mail"
+                   placeholder="{{'auth.mail' | translate}}">
+          </div>
+
+
+          <div class="form-group">
+            <input required
+                   kb-validation
+                   class="form-control"
+                   type="password"
+                   validateEqual="confirmRootPassword"
+                   reverse="true"
+                   formControlName="rootPassword"
+                   errorMessageResourceParam="auth.register.rootPassword"
+                   placeholder="{{'auth.register.rootPassword' | translate}}">
+          </div>
+
+          <div class="form-group">
+            <input required
+                   kb-validation
+                   class="form-control"
+                   type="password"
+                   validateEqual="rootPassword"
+                   reverse="false"
+                   formControlName="confirmRootPassword"
+                   errorMessageResourceParam="auth.register.confirmRootPassword"
+                   placeholder="{{'auth.register.confirmRootPassword' | translate}}">
+          </div>
+
+          <!--        <div class="form-group" [ngClass]="hasError('policy')">
+                    <div class="checkbox i-checks"><label> <input type="checkbox"><i></i> Agree the terms and policy </label>
+                    </div>
+                  </div>-->
+          <button [disabled]="!form.valid" type="button" (click)="onSubmit()"
+                  class="btn btn-primary block full-width m-b">Register
+          </button>
+
+          <p class="text-muted text-center">
+            <small>Already have an account?</small>
+          </p>
+          <a class="btn btn-sm btn-white btn-block" [routerLink]="'/auth/login'">Login</a>
+        </div>
+
+      </form>
+    </kb-loading>
+    <p class="m-t">
+      <small>Inspinia we app framework base on Bootstrap 3 &copy; 2014</small>
+    </p>
+  </div>
+</div>

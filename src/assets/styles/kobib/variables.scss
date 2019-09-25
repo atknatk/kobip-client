@@ -1,0 +1,14 @@
+$valid-success-color: #42A948;
+$valid-error-color: #ff5500; //#a94442;
+
+.ng-valid[required], .ng-touched[required], .ng-valid.required {
+  border: 1px solid $valid-success-color;
+  border-left-width: 5px;
+}
+
+.ng-invalid:not(form) {
+  &.ng-touched[required] {
+    border: 1px solid $valid-error-color;
+    border-left-width: 5px;
+  }
+}

@@ -1,0 +1,282 @@
+<kb-loading [show]="loading" [showContentOnLoading]="showContentOnLoading">
+  <div class="wrapper wrapper-content animated fadeInRight"><!-- bu bölüme yeni parca eklendi -->
+    <div class="row"> <!-- firma temel bilgiler satir baslangic -->
+      <div class="col-lg-12">
+
+        <div class="ibox">
+          <div class="ibox-content2">
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="kb f_kolon_sol1">
+                  <div class="kb-firma_mini_logo_div1">
+                    <img alt="image"
+                         class="kb-firma_mini_logo1 shadow"
+                         [src]="personal.imagePath ? personal.imagePath : 'assets/kb_img/kb_profil/profile_small.jpg'">
+                  </div>
+                  <div style="text-align:center;">
+                    <dt>{{personal.user.name}} {{personal.user.middleName}} {{personal.user.surname}}</dt>
+                    <dd>Satınalma Departmanı</dd>
+                    <dd>{{personal.user.mail}}</dd>
+                    <dd>{{personal.companyBasedPhone}}</dd>
+                  </div>
+                  <div class="kb-firma_duzenle">
+                    <a class="btn btn-primary " type="button"
+                       [routerLink]="['/personal/edit' | localize,hash.encode(personal.id)]"><i
+                      class="fa fa-pencil-square-o"></i>
+                      {{ 'personal.personalEdit' | translate}}
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="kb f_bilgi_kutu1">
+                  <span class="label label-primary" translate>personal.intTradeInfo</span>
+                  <h3 class="font-bold">{{personal.intName}}</h3>
+                  <hr>
+
+                  <dl class="m-t-md">
+                    <dt>Phone Number</dt>
+                    <dd>{{personal.intLandPhone}}</dd>
+                    <dt>Mobile Phone Number</dt>
+                    <dd>{{personal.intMobilePhone}}</dd>
+                    <dt>Email (Purchasing)</dt>
+                    <dd>{{personal.intPurchasingMail}}</dd>
+                    <dt>Email (Sales)</dt>
+                    <dd>{{personal.intSalesMail}}</dd>
+                  </dl>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="kb f_bilgi_kutu1">
+                  <span class="label label-primary" translate>personal.localTradeInfo</span>
+                  <h3 class="font-bold">Ali AKTAŞ</h3>
+                  <hr>
+
+                  <dl class="m-t-md">
+                    <dt translate>shared.phone</dt>
+                    <dd>{{personal.localLandPhone}}</dd>
+                    <dt translate>shared.mobilePhone</dt>
+                    <dd>{{personal.localMobilePhone}}</dd>
+                    <dt>{{'shared.email' | translate}} ({{'shared.purchasing' | translate}})</dt>
+                    <dd>{{personal.localPurchasingMail}}</dd>
+                    <dt>{{'shared.email' | translate}} ({{'shared.sales' | translate}})</dt>
+                    <dd>{{personal.localSalesMail}}</dd>
+                  </dl>
+                </div>
+
+              </div>
+              <!--kişisel anasayfa ayarları-->
+              <div class="col-md-8 col-md-offset-4">
+                <div class="kb f_bilgi_kutu1">
+                  <h4 class="font-bold" translate>personal.homepageSettings</h4>
+                  <hr>
+                  <div class="row">
+                    <div class="kb-grid1">
+                      <div class="col-xs-6">
+                        <span class="font-bold" translate>personal.kobipLang</span></div>
+                      <div class="col-xs-6"><span>{{personal.idKobipSiteLanguage | translate}}</span></div>
+                    </div>
+                    <div class="kb-grid1">
+                      <div class="col-xs-6"><span class="font-bold" translate>personal.homepage</span></div>
+                      <div class="col-xs-6"><span>{{enumsData.initialPage | translate}}</span></div>
+                    </div>
+                    <div class="kb-grid1">
+                      <div class="col-xs-6"><span class="font-bold" translate>personal.helpBox</span></div>
+                      <div class="col-xs-6"><span>{{getOnOffKey(personal.isHelpOpen) | async }}</span></div>
+                    </div>
+                    <div class="kb-grid1 kb-dil-row1">
+                      <div class="col-xs-6"><span class="font-bold" translate>personal.yourLang</span></div>
+                      <div class="col-xs-6">
+                        <span *ngFor="let language of enumsData.employeeLanguageList; let index = i"
+                              class="label kb-dil-label1"
+                              style="cursor: context-menu;"
+                              [class.label-warning]="personal.idKobipSiteLanguage === language.id"
+                              [class.label-success]="personal.idKobipSiteLanguage  !== language.id"
+                              title="{{'personal.mainLanguage' | translate}}">
+                          {{language.value}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- kişisel anasayfa ayarları son -->
+
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div> <!-- firma temel bilgiler son-->
+    <!--yetki satırları -->
+    <div class="row">
+      <div class="col-lg-12 ">
+        <div class="ibox kb ibox-kutu">
+          <div class="ibox-title">
+            <h5 translate>personal.kobipAuthorization</h5>
+            <iboxtools></iboxtools>
+          </div>
+          <div class="ibox-content">
+            <kb-auth-roles [grantedRoles]="grantedRoles"></kb-auth-roles>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <!-- yetki satirlari son -->
+    <br>
+
+
+    <!--satınalma satırları -->
+    <div class="row">
+      <div class="col-lg-12 ">
+        <div class="ibox kb ibox-kutu">
+          <div class="ibox-title">
+            <h5 translate>personal.purchasingSettings</h5>
+            <iboxtools></iboxtools>
+          </div>
+          <div class="ibox-content">
+            <span class="label label-primary" translate>personal.deliverySettings</span>
+            <div class="row show-grid kb birim1 grid-view m-b-none">
+              <div class="col-sm-6 col-xs-12">
+                <label class="truncate" translate>personal.showDelivery</label>
+              </div>
+              <div class="col-sm-6 col-xs-12">
+                <span>{{getOnOffKey(personal.isDeliveryTabOpen) | async }}</span>
+              </div>
+            </div>
+            <div class="row show-grid kb birim1 grid-view m-n">
+              <div class="col-sm-6 col-xs-12">
+                <label class="truncate" translate>personal.showDeliveryNote</label>
+              </div>
+              <div class="col-sm-6 col-xs-12">
+                <span>{{getOnOffKey(personal.isOnlyDeliveryNoteVisible) | async }}</span>
+              </div>
+            </div>
+            <div class="row show-grid kb birim1 grid-view m-n">
+              <div class="col-sm-6 col-xs-12">
+                <label class="truncate" translate>personal.deliveryDuration</label>
+              </div>
+              <div class="col-sm-6 col-xs-12">
+                <span *ngIf="enumsData.deliveryDuration">{{enumsData.deliveryDuration | translate}}</span>
+                <span *ngIf="!enumsData.deliveryDuration">{{'general.unSelect' | translate}}</span>
+              </div>
+            </div>
+            <div class="row show-grid kb birim1 grid-view m-n">
+              <div class="col-sm-6 col-xs-12">
+                <label class="truncate" translate>personal.preferredTransportationType</label>
+              </div>
+              <div class="col-sm-6 col-xs-12" style="padding-top: 8px;padding-bottom: 9px">
+                <span>
+                  <i class="fa fa-ship kb personal-delivery-icon"
+                     [class.active]="transportType.indexOf('zz.transportationType.seaway') !== -1"></i>
+                <i class="fa fa-truck kb personal-delivery-icon"
+                   [class.active]="transportType.indexOf('zz.transportationType.road') !== -1"></i>
+                <i class="fa fa-plane kb personal-delivery-icon"
+                   [class.active]="transportType.indexOf('zz.transportationType.airway') !== -1"></i>
+                </span>
+              </div>
+            </div>
+            <div class="row show-grid kb birim1 grid-view m-n">
+              <div class="col-sm-6 col-xs-12">
+                <label class="truncate" translate>personal.deliveryType</label>
+              </div>
+              <div class="col-sm-6 col-xs-12">
+                <span *ngIf="enumsData.employeeDeliveryTypeList">{{enumsData.employeeDeliveryTypeList}}</span>
+                <span *ngIf="!enumsData.employeeDeliveryTypeList">{{'general.unSelect' | translate}}</span>
+              </div>
+            </div>
+            <div class="row show-grid kb birim1 grid-view m-t-none">
+              <div class="col-sm-6 col-xs-12">
+                <label class="truncate" translate>personal.deliveryNote</label>
+              </div>
+              <div class="col-sm-6 col-xs-12">
+                <span>Teslimat Notu Örneği Buraya Gelecek</span>
+              </div>
+            </div>
+            <span class="label label-primary"
+                  *ngIf="enumsData.employeePurchasingCountryList != null && enumsData.employeePurchasingCountryList.length > 0">
+              Satınalma Yapılacak Ülkeler</span>
+            <div class="row">
+              <div class="col-sm-12">
+                <ul class="list-horizontal">
+                  <li class="check" style="width: 200px"
+                      *ngFor="let country of enumsData.employeePurchasingCountryList">
+                    {{country}}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <!-- satınalma satırları son -->
+    <br>
+    <!--satış satırları -->
+    <div class="row">
+      <div class="col-lg-12 ">
+        <div class="ibox float-e-margins kb ibox-kutu">
+          <div class="ibox-title">
+            <h5 translate>personal.salesSettings</h5>
+            <iboxtools></iboxtools>
+          </div>
+          <div class="ibox-content">
+            <span class="label label-primary" translate>personal.deliverySettings
+            </span>
+            <div class="row show-grid kb birim1  grid-view m-b-none">
+              <div class="col-sm-6 col-xs-12">
+                <label class="truncate" translate>personal.isOnlyPartnerPostingVisible</label>
+              </div>
+              <div class="col-sm-6 col-xs-12">
+                <span>{{getOnOffKey(personal.isOnlyPartnerPostingVisible) | async}}</span>
+              </div>
+            </div>
+            <div class="row show-grid kb birim1  grid-view m-n">
+              <div class="col-sm-6 col-xs-12">
+                <label class="truncate" translate>personal.isAscendingPostingList</label>
+              </div>
+              <div class="col-sm-6 col-xs-12">
+                <span>{{getOnOffKey(personal.isAscendingPostingList) | async}}</span>
+              </div>
+            </div>
+            <div class="row show-grid kb birim1  grid-view m-t-none" style="margin-top: 0;">
+              <div class="col-sm-6 col-xs-12">
+                <label class="truncate" translate>personal.isLastDatePosting</label>
+              </div>
+              <div class="col-sm-6 col-xs-12">
+                <span>{{getOnOffKey(personal.isLastDatePosting) | async}}</span>
+              </div>
+            </div>
+            <span class="label label-primary"
+                  *ngIf="enumsData.employeeSalesCountryList != null && enumsData.employeeSalesCountryList.length > 0"
+                  translate>general.salesCountries</span>
+            <div class="row">
+              <div class="col-sm-12">
+                <ul class="list-horizontal">
+                  <li class="check" style="width: 200px" *ngFor="let country of enumsData.employeeSalesCountryList">
+                    {{country}}
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <span class="label label-primary" translate>general.salesCategories</span>
+            <div class="row kb-partner_kategori m-t-sm">
+              <div class="col-xs-12" *ngFor="let item of personal.employeeCategoryList">
+                <div [innerHTML]="getSelectedDisplayHtml(item.display)"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <!-- satış satırları son -->
+
+  </div>
+</kb-loading>

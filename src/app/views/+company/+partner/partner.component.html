@@ -1,0 +1,269 @@
+<kb-loading [show]="loading" [showContentOnLoading]="showContentOnLoading">
+  <div class="wrapper wrapper-content animated fadeInRight"><!-- bu bölüme yeni parca eklendi -->
+    <br>
+    <!--satınalma satırları -->
+    <div class="row">
+      <div class="col-lg-12 ">
+        <div class="ibox float-e-margins kb ibox-kutu">
+          <div class="ibox-title">
+            <h5>Partner Davet</h5>
+            <iboxtools></iboxtools>
+          </div>
+          <div class="ibox-content">
+            <form [formGroup]="inviteForm">
+              <div class="row kb-partner_davet">
+                <div class="col-xs-12 col-sm-12 col-md-4">
+                  <div class="col-xs-12 col-sm-4">
+                    <div (click)="onClickInviteVisibility(inviteForm,'isInvitorPhoneVisible')">
+                      <span class="no_selection" translate>shared.phone</span>
+                      <i [class.fa-eye]="inviteForm.get('isInvitorPhoneVisible').value"
+                         [class.active]="inviteForm.get('isInvitorPhoneVisible').value"
+                         [class.fa-eye-slash]="!inviteForm.get('isInvitorPhoneVisible').value"
+                         class="fa"></i>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-4">
+                    <div (click)="onClickInviteVisibility(inviteForm,'isInvitorMailVisible')">
+                      <span class="no_selection" translate>shared.email</span>
+                      <i [class.fa-eye]="inviteForm.get('isInvitorMailVisible').value"
+                         [class.active]="inviteForm.get('isInvitorMailVisible').value"
+                         [class.fa-eye-slash]="!inviteForm.get('isInvitorMailVisible').value"
+                         class="fa"></i>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-4">
+                    <div (click)="onClickInviteVisibility(inviteForm,'isInvitorAddressVisible')">
+                      <span class="no_selection" translate>shared.address</span>
+                      <i [class.fa-eye]="inviteForm.get('isInvitorAddressVisible').value"
+                         [class.active]="inviteForm.get('isInvitorAddressVisible').value"
+                         [class.fa-eye-slash]="!inviteForm.get('isInvitorAddressVisible').value"
+                         class="fa"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-3">
+                  <select class="form-control"
+                          formControlName="IdInvetorCompanyAssigneeEmployee"
+                          name="account">
+                    <option value="null" translate>component.select</option>
+                    <option *ngFor="let option of employeeObservable | async"
+                            [value]="option.id">
+                      {{option.name}}
+                      {{option.middleName}}
+                      {{option.surname}}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-5">
+                  <div class="input-group">
+                    <input class="form-control"
+                           formControlName="invitedMail"
+                           email
+                           type="text">
+                    <span class="input-group-btn">
+                      <button [disabled]="!inviteForm.valid || isInviting"
+                              type="button"
+                              (click)="onClickInvitePartner()"
+                              class="btn btn-primary">Davet et</button> </span></div>
+                </div>
+
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <!-- satınalma satırları son -->
+    <br>
+    <div class="row">
+      <div class="col-lg-12 ">
+        <div class="ibox float-e-margins kb ibox-kutu kb-partnerler">
+          <div class="ibox-title">
+            <form [formGroup]="filterForm">
+              <div class="row kb-partner_ara">
+                <div class="col-md-4">
+                  <input placeholder="Firma, kategori ara"
+                         [formControl]="filterTerm"
+                         class="form-control input-sm"
+                         type="text">
+                </div>
+                <div class="col-md-3">
+                  <select [formControl]="filterCountryTerm"
+                          class="form-control input-sm" name="account">
+                    <option [value]="null">{{ 'component.select' | translate }}
+                    </option>
+                    <option *ngFor="let option of filterCountryIds"
+                            [value]="option">{{ option | translate }}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-md-1"
+                     style="cursor: pointer"
+                     (click)="toggleSort()">
+                  <i class="fa" [ngClass]="'fa-sort-alpha-' + sortParam"></i>
+                </div>
+                <div class="col-md-3 kb-arama">
+                  <i (click)="showPartners()"
+                     tooltip="{{'partner.showPartner'| translate}}"
+                     placement="top"
+                     [ngClass]="isPartnerSelected ? 'fa fa-check-square-o' : 'fa fa-suitcase'"></i>
+                  <i (click)="invitingPartners()"
+                     tooltip="{{'partner.showInvitingPartner'| translate}}"
+                     placement="top"
+                     [ngClass]="isInvitingPartnerSelected ? 'fa fa-check-square-o' : 'fa fa-suitcase'"></i>
+                  <i (click)="invitedPartners()"
+                     tooltip="{{'partner.showInvitedPartner'| translate}}"
+                     placement="top"
+                     [ngClass]="isInvitedPartnerSelected ? 'fa fa-check-square-o' : 'fa fa-suitcase'"></i>
+                  <!--  <i (click)="blockedPartners()"
+                       tooltip="{{'partner.showBlockedPartner'| translate}}"
+                       placement="top"
+                       [ngClass]="isBlockedPartnerSelected ? 'fa fa-check-square-o' : 'fa fa-ban'"></i>-->
+                </div>
+                <div class="col-md-1">
+                  <i (click)="removeFilter()"
+                     tooltip="{{'app.general.removeFilter' | translate}}"
+                     placement="top"
+                     class="fa fa-eraser"></i>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="ibox-content no_selection">
+            <div *ngFor="let partner of filteredPartners" class="kb-genel_kutu kb-partner_kutu">
+              <div class="kb-partner">
+                <div class="kb-partner-star-firma_ismi" (click)="toggleInfo(partner.id)">
+                  <div class="kb-partner-star">
+                    <div><i class="fa fa-star"></i></div>
+                    <div class="kb-partner-puan">{{getScore(partner.kobipScore,partner.customerScore)}}</div>
+                  </div>
+                  <div class="kb-partner-firma_ismi">
+                    <span *ngIf="partner.localName === null">{{partner.invitedMail}}</span>
+                    <span>{{partner.internationalShortName}}</span>
+                    <span *ngIf="partner.localShortName"> / </span>
+                    <span>{{partner.localShortName}}</span>
+                    <br>
+                    <div>{{partner.idCountry | translate}}</div>
+                    <span>&nbsp;</span>
+                  </div>
+                </div>
+                <div class="kb-partner-ayar">
+                  <i *ngIf="!partner.isInvitedByMe && partner.idInvitationStatus === invitationStatusEnum.pending"
+                     (click)="onApprove(partner)"
+                     class="fa fa-plus-square"></i>
+                  <i *ngIf="!partner.isInvitedByMe && partner.isInvitationApproved === false"
+                     class="fa fa-ban"></i>
+                  <i *ngIf="!partner.isInvitedByMe && partner.isInvitationApproved === false"
+                     class="fa fa-trash"></i>
+                  <i (click)="toggleSettings(partner.id)"
+                     class="fa fa-gear"></i>
+                </div>
+              </div>
+              <div id="partner-info-{{partner.id}}"
+                   *ngIf="partner.idInvitationStatus === invitationStatusEnum.accepted"
+                   style="display: none">
+                <hr>
+                <!--Partner Bilgileri -->
+                <div class="row kb-partner_bilgi">
+                  <div class="col-sm-6 kb-partner_bilgi-kolon1">
+                    <div>
+                      <span class="font-bold">{{partner.internationalName}}</span>
+                      <span *ngIf="partner.localName">/</span>
+                      <span>{{partner.localName}}</span>
+                    </div>
+                    <div>{{partner.internationalAddress}}</div>
+                    <div>{{partner.internationalAddress2}}</div>
+                    <div>{{partner.intCityName}}
+                      <span *ngIf="partner.intCityName !== null && partner.idCountry !== null">/</span>
+                      {{partner.idCountry | translate}}
+                    </div>
+                  </div>
+                  <div class="col-sm-6 kb-partner_bilgi-kolon2">
+                    <div class="font-bold">{{partner.employeeIntName}}</div>
+                    <div>{{partner.idCompanyUserCategory | translate}}</div>
+                    <div>{{partner.companyBasedPhone}}</div>
+                    <div>{{partner.companyBasedMail}}</div>
+                  </div>
+                </div>
+                <!--Kaetgoriler modu baslangic -->
+                <div *ngIf="partner.categoryList !== null && partner.categoryList.length > 0">
+                  <hr>
+                  <div class="row kb-partner_kategori">
+                    <div class="col-xs-12" *ngFor="let item of partner.categoryList">
+                      <div [innerHTML]="getSelectedCategoryDisplayHtml(item.display)"></div>
+                    </div>
+                  </div>
+                </div>
+                <!--Kategoriler modu son-->
+              </div>
+              <div id="partner-settings-{{partner.id}}"
+                   style="display: none">
+                <hr>
+                <!--Ayar Bilgileri -->
+                <form [formGroup]="settingsForm">
+                  <div class="row kb-partner_ayar_menu">
+                    <div class="col-sm-5">
+                      <div class="col-sm-4">
+                        <div (click)="onTogglePhone(partner)">
+                          <span class="no_selection" translate>shared.phone</span>
+                          <i [class.fa-eye]="showSettingPhoneVisibility(partner)"
+                             [class.active]="showSettingPhoneVisibility(partner)"
+                             [class.fa-eye-slash]="!showSettingPhoneVisibility(partner)"
+                             class="fa"></i>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div (click)="onToggleMail(partner)">
+                          <span class="no_selection" translate>shared.email</span>
+                          <i [class.fa-eye]="showSettingMailVisibility(partner)"
+                             [class.active]="showSettingMailVisibility(partner)"
+                             [class.fa-eye-slash]="!showSettingMailVisibility(partner)"
+                             class="fa"></i>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div (click)="onToggleAddress(partner)">
+                          <span class="no_selection" translate>shared.address</span>
+                          <i [class.fa-eye]="showSettingAddressVisibility(partner)"
+                             [class.active]="showSettingAddressVisibility(partner)"
+                             [class.fa-eye-slash]="!showSettingAddressVisibility(partner)"
+                             class="fa"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <select #t
+                              class="form-control"
+                              (change)="onChangeAssigneeEmployee(t.value,partner)"
+                              name="account">
+                        <option value="null" translate>component.select</option>
+                        <option *ngFor="let option of employeeObservable | async"
+                                [attr.selected]="option.id === partner.idAssigneeEmployee ? '' : null"
+                                [value]="option.id">
+                          {{option.name}}
+                          {{option.middleName}}
+                          {{option.surname}}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="kb-partner_ayar_menu">
+                        <!-- <i class="fa fa-ban"
+                            (click)="onBan(partner)"></i>-->
+                        <!--<i class="fa fa-warning"></i>-->
+                        <i class="fa fa-trash"
+                           (click)="onRemove(partner)"></i>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</kb-loading>
